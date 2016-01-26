@@ -1,0 +1,8 @@
+# Site settings
+title: Electronic Structure Theory and Applications to Chemical Kinetics
+url: "http://chemeng444.github.io"
+baseurl: ""
+
+# Build settings
+markdown: redcarpet
+permalink: pretty

@@ -1,4 +1,10 @@
-# Getting Started
+---
+layout: page
+mathjax: false 
+permalink: /ASE/Getting_Started/
+---
+
+## Getting Started
 To begin with, we will be looking at bulk metals and how to determine lattice constants, then we will be setting up metal surfaces. We will be using Pt throughout.
 ## Contents
 1. [A typical ASE script](#a-typical-ase-script)
@@ -7,6 +13,7 @@ To begin with, we will be looking at bulk metals and how to determine lattice co
   2. [Convergence with k-points](#convergence-with-k-points)
 2. [Pt surfaces](#pt-surfaces)
 
+<a name='a-typical-ase-script'></a>
 ## A typical ASE script
 
 Let's look at how a typical ASE script is written. Open the [`run_Pt111.py`](run_Pt111.py) script.
@@ -14,7 +21,7 @@ Let's look at how a typical ASE script is written. Open the [`run_Pt111.py`](run
 vi run_Pt111.py
 ```
 
-The first line
+The first line,
 ```python
 #!/home/vossj/suncat/bin/python
 ```
@@ -115,8 +122,10 @@ slab.set_calculator(calc)                       #connect espresso to slab
 qn = QuasiNewton(slab, trajectory=name+'.traj') #relax slab
 qn.run(fmax=0.05)                               #until max force<=0.05 eV/AA
 ```
+<a name='bulk-pt'></a>
 ## Bulk Pt
 As a first example, we will be setting up bulk fcc Pt. You will typically do this when working with an entirely new system. 
+<a name='lattice-constant-determination'></a>
 ### Lattice constant determination
 Find the [`bulk_Pt.py`](bulk_Pt.py) script in the `lattice` folder. This script determines the optimum lattice parameter for bulk fcc Pt using the equation of state model. Submit the script by running
 ```bash
@@ -124,6 +133,7 @@ $ sbatch --job-name=$PWD bulk_Pt.py
 ```
 Here, `--job-name=$PWD` sets the current working directory as the job name. This plots the energy as a function of lattice parameter and determine the lattice parameter corresponding to the minimum energy.
 
+<a name='convergence-with-k-points'></a>
 ### Convergence with k-points
 Next, we will determine how well-converged the energy is with respect to the number of k-points in each direction. Submit the [`run_Pt_sp.py`](run_Pt_sp.py) script in the kpts folder using the lattice parameter obtained from the previous section.
 
@@ -132,6 +142,7 @@ $ sbatch --job-name=$PWD run_Pt_sp.py
 ```
 Try using k = 6, 10, 14, and 18 in all three directions (i.e., k×k×k). Plot the energy as a function of k-points. Pick one and try to justify why it would be a reasonable choice. Use the optimal k-point sampling to re-run the lattice optimization script again and check if the results are consistent. The relevant k-points will usually be known, since we have consistent settings that we use throughout the group. In principle, one should always check for convergence when working with a new system.
 
+<a name='pt-surfaces'></a>
 ## Pt surfaces
 Next we will set up various common surface terminations of Pt using the `ase.lattice.surface` module and optimize the geometry. We will focus on the 111 surface. The [`setup_111.py`](setup_111.py) file sets up the (111) surface, with specification of the size and lattice parameter. You can execute this directly from the terminal and view the results, e.g.:
 ```bash

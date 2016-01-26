@@ -1,4 +1,10 @@
-# ASE Tutorials
+---
+layout: page
+mathjax: true
+permalink: /ASE/
+---
+
+## ASE Tutorials
 1. [Getting Started](Getting_Started/)
 2. [Adsorption](Adsorption/)
 3. [Transition States](Transition_States/)

@@ -1,4 +1,10 @@
-#Adsorption on Surfaces
+---
+layout: page
+mathjax: true
+permalink: /ASE/Adsorption/
+---
+
+## Adsorption on Surfaces
 
 In the second tutorial, you will be calculating the dissociative adsorption of H<sub>2</sub>O onto the Pt(111) surface.
 
@@ -7,18 +13,23 @@ In the second tutorial, you will be calculating the dissociative adsorption of H
 2. [Adsorption sites](#adsorption-sites)
 3. [Dissociative adsorption](#dissociative-adsorption)
 
-
+<a name='gaseous-molecules'></a>
 ## Gaseous molecules
 
-In this exercise you will be calculating the dissociative adsorption of H<sub>2</sub>O on the Pt(111) surface from the previous exercise. The dissociative adsorption energy is defined as
+In this exercise you will be calculating the dissociative adsorption of H<sub>2</sub>O on the Pt(111) surface from the previous exercise. The dissociative adsorption energy is defined as:
+<div>
+$$
+\Delta E\_\mathrm{ads} = E\_\mathrm{Pt(111) + OH\* + H\*}  - E\_\mathrm{Pt(111)} - E\_\mathrm{H\_2O}
+$$
 
-∆_E_<sub>ads</sub> = _E_<sub>Pt(111)+OH* +H*</sub> - _E_<sub>Pt(111)</sub>  - _E_<sub>H<sub>2</sub>O</sub>
+</div>
 
-where OH* and H* refer to adsorbed OH and H. We have _E_<sub>Pt(111)</sub> from the previous exercise, so we will need to calculate both _E_<sub>Pt(111)+OH* +H*</sub> and _E_<sub>H<sub>2</sub>O</sub> here. The [`run_H2O.py`](run_H2O.py) will calculate the optimized geometry, the electronic energy, as well as the vibrational modes of a gaseous H<sub>2</sub>O molecule. Run the script and check that the vibrational modes are reasonable.
+where OH\* and H\* refer to adsorbed OH and H. We have \\(E\_\mathrm{Pt(111)}\\) from the previous exercise, so we will need to calculate both \\(E\_\mathrm{Pt(111)+OH\* +H\*}\\) and \\(E\_\mathrm{H\_2O}\\) here. The [`run_H2O.py`](run_H2O.py) will calculate the optimized geometry, the electronic energy, as well as the vibrational modes of a gaseous H<sub>2</sub>O molecule. Run the script and check that the vibrational modes are reasonable.
 
+<a name='adsorption-sites'></a>
 ## Adsorption sites
 
-There are four adsorption sites on the Pt(111) surface that a molecule can adsorb to: the fcc, hcp, top, and bridge sites. Follow the `ads_Pt111_H2O.py` script, which sets up a variety of configurations of adsorbed OH* and H*. In the script, an optimized structure for the Pt(111) surface is read, and then the adsorbate atoms are added manually. The `add_adsorbate()` function is used to add adsorbates:
+There are four adsorption sites on the Pt(111) surface that a molecule can adsorb to: the fcc, hcp, top, and bridge sites. Follow the `ads_Pt111_H2O.py` script, which sets up a variety of configurations of adsorbed OH\* and H\*. In the script, an optimized structure for the Pt(111) surface is read, and then the adsorbate atoms are added manually. The `add_adsorbate()` function is used to add adsorbates:
 
 ```python
 # add OH
@@ -43,7 +54,7 @@ More information can be found [here](https://wiki.fysik.dtu.dk/ase/ase/surface.h
 
 One could also use the ASE graphical user interface ag to add an adsorbate or molecule as well. Use `ag <file>.traj` to open the trajectory file. Then simply click the atom above where the adsorbate will sit, and click `ctrl + A`, then specify the adsorbate and the vertical distance above the site. You can also hold `ctrl` to select multiple atoms and add an adsorbate, which will be at the center of all the selected atoms.
 
-
+<a name='dissociative-adsorption'></a>
 ## Dissociative adsorption
 
 We will be focusing on the dissociative adsorption mechanism, where the H<sub>2</sub>O molecule separates as H* and OH* when it adsorbs onto the surface. The [`setup_ads.py`](setup_ads.py) script sets up a Pt(111) with OH* and H* adsorbed on fcc sites. The result is saved into the `surface.traj` file. To run the geometry optimization, submit `opt.py` which reads in `surface.traj`

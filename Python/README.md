@@ -1,4 +1,10 @@
-# Python Tutorial
+---
+layout: page
+mathjax: false
+permalink: /Python/
+---
+
+## Python Tutorial
 
 ## Contents
 1. [Introduction](#introduction)
@@ -14,10 +20,11 @@
 10. [Modules](#modules)
 11. [ASE](#ase)
 
-
+<a name='introduction'></a>
 ## Introduction
 The Atomic Simulation Environment (ASE) is accessed through Python scripts, so it is thus necessary to learn some basic Python in order to perform calculations. The advantage is that ASE modules can be seamlessly used along with regular Python code, which makes it extremely easy to write scripts and programs for efficiently setting up and running a large number of calculations. Refer to the [Python documentation](https://docs.python.org/2/) for more detailed information. The following tutorial only convers the basic Python knowledge necessary for writing simple scripts.
 
+<a name='running-scirpts'></a>
 ## Running scripts
 Python can be run in different ways. In the terminal, run `python` to access the interactive prompt. Each line of code in a Python script can be executed interactively using the prompt. You can type `exit()` or press `ctrl + D` to exit the prompt.
 
@@ -39,7 +46,7 @@ python -i scriptname.py arg1 arg2
 
 This will execute `scriptname.py` taking in arguments `arg1` and `arg2`, and then open the interactive prompt. You can access all variables, modules, and etc. that are available in `scriptname.py`.
 
-
+<a name='numbers-and-strings'></a>
 ## Numbers and strings
 
 Here are some basic data types for numbers:
@@ -91,7 +98,7 @@ print b[1:3]  # prints 'nd'
 print len(b)  # --> 18
 print ' square root of 2=%.8f ' % (0.5**0.5) # prints 8 first digits of 1/sqrt(2)
 ```
-
+<a name='operators'></a>
 ## Operators
 
 Here are some of the common operators for assigning and comparing values. The mathematical operators `+`, `-`, `*`, `/` are used for addition, subtraction, multiplication, and division. For exponents, the double asterick `**` is used.
@@ -128,7 +135,7 @@ The membership operator `in` are convenient for testing if an element is inside 
 1 in [1,2,3]       # True
 1 not in [1,2,3]   # False
 ```
-
+<a name='scope'></a>
 ## Scope
 
 In Python, scope is defined by indentation. Either tabbed spaces or regular spaces will work. As long as you are consistent, it will avoid confusing error messages. Scope is used to define code blocks in control flow (`if`, `else`, `elif`, etc.), in loops (`for` loops and `while` loops), in function definitions, and in class definitions.
@@ -143,7 +150,7 @@ elif a==b:
 else :
   print 'a is less than b'
 ```
-
+<a name='loops'></a>
 ## Loops
 
 For loops are written using the `for <element> in <list>:` syntax, where the `<element>` represents each element in the `<list>`.
@@ -151,25 +158,26 @@ For loops are written using the `for <element> in <list>:` syntax, where the `<e
 ```python
 for i in range(3):
   print i /2.
-#−−> 0.0
+
+#output:
+#    0.0
 #    0.5
 #    1.0
-
-for i in (1,4,9,20):
-  print i
 ```
 
-While loops
+While loops:
+
 ```python
 i = 10.
 while i <1000.:
   print i
   i *= 10.5
 
-#−−> 10.0
+#output:
+#    10.0
 #    105.0
 ```
-
+<a name='lists'></a>
 ## Lists
 
 Lists in Python can contain mixed data types. This sets up an empty list `a`
@@ -226,6 +234,7 @@ squares = [x**2 for x in range(10)]
 
 Here `range(10)` generates a list from 0 up to but not including 10 at intervals of 1, `[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]`.
 
+<a name='tuples'></a>
 ## Tuples
 
 Tuples are similar to lists except they are initialized using round brackets `( )` and they are immutable, which means their contents cannot be modified. These are useful if the container contains values that don't need to be modified.
@@ -236,6 +245,7 @@ b = (1,2)
 
 If you try `b[0] = 2` you will get `TypeError: 'tuple' object does not support item assignment`.
 
+<a name='dictionaries'></a>
 ## Dictionaries
 
 Dictionaries are one of the most convenient containers in Python. To set up an empty dictionary
@@ -273,7 +283,7 @@ Dictionaries also include other convenient methods, such as `items()`, which ret
 print d.items()      #−−> [('a', 1), ('c', 'd'), ('b', 4)]
 print d.has_key('e') #−−> False
 ```
-
+<a name='file-i-o'></a>
 ## File I/O
 
 File input and output is important for reading in results and writing out results for the ASE calculations.
@@ -308,6 +318,8 @@ for line in f:
   line.split()[0]   # split the lines by spaces and return the first element
 f.close()
 ```
+
+<a name='functions'></a>
 ## Functions
 
 Functions are defined using `def` and the proper scope indentation. To write a custom addition function,
@@ -317,6 +329,7 @@ def add(a,b):
 ```
 Then `add(1,2)` will return `5`.
 
+<a name='modules'></a>
 ## Modules
 
 A lot of useful modules are installed system-wide. They provide useful extended functionality. In addition to the `ase` modules, you will probably be using the `numpy` module most frequently. `numpy` provides `array` containers for matrix and matrix manipulation, similar to MATLAB.
@@ -341,6 +354,7 @@ a = array([[1.,2.],[3.,4.]])
 
 Modules that are not loaded by default must be loaded using the `import` statement.
 
+<a name='ase'></a>
 ## ASE
 
 The Atomic Simulation Environment (ASE) is simply another Python module that can be loaded using

@@ -1,11 +1,18 @@
-# Basic UNIX
+---
+layout: page
+mathjax: true
+permalink: /UNIX/
+---
+
+## Basic UNIX
 ## Contents
-1. [Using the UNIX Shell on the Sherlock Cluster] (#using-the-unix-shell-on-the-sherlock-cluster)
+1. [Using the UNIX Shell on the Sherlock Cluster] (#using-unix)
 2. [Basic Comamands] (#basic-commands)
 3. [Wildcards] (#wildcards)
 4. [Text Editors] (#text-editors)
 5. [Submitting Jobs] (#submitting-jobs)
 
+<a name='using-unix'></a>
 ## Using the UNIX Shell on the Sherlock Cluster
 
 For most of your work, you will be logging onto the [Sherlock cluster] (http://sherlock.stanford.edu) remotely and submitting jobs there. More details about logging on are included [here] (http://sherlock.stanford.edu/mediawiki/index.php/LogonCluster).
@@ -35,6 +42,7 @@ source ~/.bashrc
 ```
 This will enable you to run SUNCAT specific software on the Sherlock cluster, including the ASE interface to Quantum ESPRESSO.
 
+<a name='basic-commands'></a>
 ## Basic Commands
 
 These are some of the basic commands that you will be using in the shell on a daily basis.
@@ -139,11 +147,16 @@ ___
 cat <file_name>
 ```
 Print out contents of a text file or files within the shell.
+
+<a name='wildcards'></a>
 ## Wildcards
 Wildcards can be used to perform commands on multiple files simultaneously.
+
+___
 ```bash
 ?
 ```
+
 Single character. Example: ```ag neb?.traj neb??.traj``` will use ```ag``` to open all files containing one or two characters between neb and .traj
 ___
 
@@ -152,14 +165,12 @@ ___
 ```
 Any number of characters. Example: ```ls *.traj``` will list all ```.traj``` files.
 
+<a name='text-editors'></a>
 ## Text Editors
-There are several text editors available. Popular ones include ```vim``` and ```nano```. Most people at SUNCAT use ```vim```. To open a file, use
-```bash
-vim <file_name>
-nano <file_name>
-mcedit <file_name>
-```
+There are several text editors available. Popular ones include ```vim``` and ```nano```. Most people at SUNCAT use ```vim```. To open a file, use ```vim file.txt``` to open a file named ```file.txt```.
 
+
+<a name='submitting-jobs'></a>
 ## Submitting Jobs
 These instructions are specific to the Sherlock cluster.
 ```bash
