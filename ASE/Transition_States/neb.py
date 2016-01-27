@@ -51,10 +51,10 @@ m = multiespresso(ncalc=intermediate_images,outdirprefix='ekspressen',
 		pw=500.,
 		dw=5000.,
 		xc=xc,
-    kpts=(4,4,1),
+		kpts=(4,4,1),
 		nbands=-20,
-    spinpol=False,
-    dipole={'status':True},
+		spinpol=False,
+		dipole={'status':True},
 		convergence={'energy':1e-5,'mixing':0.25,'maxsteps':300})
 
 

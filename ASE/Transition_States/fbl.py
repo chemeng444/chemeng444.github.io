@@ -30,30 +30,19 @@
 #SBATCH --ntasks-per-node=16
 #################
 
-from sys import path
-from espresso import espresso
-from ase import io
-from ase.optimize import QuasiNewton
-from ase.constraints import FixBondLength
-from ase.constraints import FixAtoms
-from ase import Atoms
-from ase.io.trajectory import PickleTrajectory
-
-from ase.parallel import *
-from ase.atoms import np
-import os
-import time
-import shutil
+import sys
+import cPickle as pickle
 
 from ase import *
+from ase import io
+from ase.constraints import FixBondLength
+from ase.constraints import FixAtoms
 from ase.dft.bee import BEEF_Ensemble
-from ase.structure import molecule
-import numpy as np
-import cPickle as pickle
+from ase.optimize import QuasiNewton
+from espresso import espresso
 
 # read in trajectory. this should be the dissociated OH and H
 atoms = io.read('surface.traj')
-
 
 # specify the two atoms whose distance is to be fixed
 # during the geometry optimization
