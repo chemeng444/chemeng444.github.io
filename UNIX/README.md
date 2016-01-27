@@ -29,7 +29,9 @@ To connect to the Sherlock cluster, type
 ```bash
 kinit sunetid@stanford.edu
 ```
+
 to authenticate in Kerberos, then
+
 ```bash
 ssh -K -X sunetid@sherlock.stanford.edu
 ```
@@ -175,6 +177,7 @@ There are several text editors available. Popular ones include ```vim``` and ```
 <a name='submitting-jobs'></a>
 ## Submitting Jobs
 These instructions are specific to the Sherlock cluster.
+
 ```bash
 sbatch <script_file>
 ```

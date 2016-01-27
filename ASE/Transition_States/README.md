@@ -25,15 +25,16 @@ In the `neb.py` file make sure the line specifying the number of nodes.
 ```python
 #SBATCH --nodes=5
 ```
-corresponds to the number of _intermediate_ images. Check that `intermediate\_images = 5` matches. 
+corresponds to the number of _intermediate_ images. Check that `intermediate_images = 5` matches. 
 
-Both `neb.py` and `neb\_restart.py` scripts require the initial and final states of the reaction path to be provided. This is specified in the lines
+Both `neb.py` and `neb_restart.py` scripts require the initial and final states of the reaction path to be provided. This is specified in the lines:
+
 ```python
 initial = io.read('neb0.traj')
 final = io.read('neb6.traj')
 ```
 
-make sure that the trajectory files are in the directory and are named in the same manner. For the `neb\_restart.py` script, the initial and final trajectories must be named in the `neb\*.traj` format, where `\*` is a number. The script will read in all intermediate images based on the number in the initial and final trajectory.
+make sure that the trajectory files are in the directory and are named in the same manner. For the `neb_restart.py` script, the initial and final trajectories must be named in the `neb*.traj` format, where `*` is a number. The script will read in all intermediate images based on the number in the initial and final trajectory.
 
 To view all the trajectory files, run the following command
 
@@ -41,7 +42,7 @@ To view all the trajectory files, run the following command
 ag neb*.traj –n -1
 ```
 
-where all files of the form `neb\*.traj` (with * referring to any number of characters) will be opened in ag. The `-n` flag specifies the image within each trajectory file. Since you are optimizing the entire reaction path, each step in the NEB will be stored in each image file. Specifying `-n -1` tells ag to only read the last image of each file (i.e. the most current step).
+where all files of the form `neb*.traj` (with * referring to any number of characters) will be opened in ag. The `-n` flag specifies the image within each trajectory file. Since you are optimizing the entire reaction path, each step in the NEB will be stored in each image file. Specifying `-n -1` tells ag to only read the last image of each file (i.e. the most current step).
 
 
 <a name='fixed-bond-length-calculation'></a>
@@ -85,4 +86,4 @@ which will display images 1 through 22 within the combined trajectory file. The 
 
 <a name='vibrational-frequencies'></a>
 ## Vibrational frequencies
-Calculate the vibrational frequencies for transition state and the final state using the [`run\_freq.py`](run_freq.py) script. Use `ag` to view the vibrational modes, which are written out as `vib\*.traj` files. There should be 3N vibrational modes for all adsorbed states, and 3N - 1 vibrational modes for the transition state.
+Calculate the vibrational frequencies for transition state and the final state using the [`run_freq.py`](run_freq.py) script. Use `ag` to view the vibrational modes, which are written out as `vib*.traj` files. There should be 3N vibrational modes for all adsorbed states, and 3N - 1 vibrational modes for the transition state.

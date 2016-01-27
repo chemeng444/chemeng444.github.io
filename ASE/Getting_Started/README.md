@@ -17,17 +17,20 @@ To begin with, we will be looking at bulk metals and how to determine lattice co
 ## A typical ASE script
 
 Let's look at how a typical ASE script is written. Open the [`run_Pt111.py`](run_Pt111.py) script.
+
 ```bash
 vi run_Pt111.py
 ```
 
 The first line,
+
 ```python
 #!/home/vossj/suncat/bin/python
 ```
 will ensure that the version of Python that is being used is the one that has all the software from SUNCAT installed.
 
 Next, notice the comments in the beginning. These lines will be ignored by Python, but will be read by the job submission system. These include information such as how much time to allocate, the number of nodes required, what the names of the output and error files are, what the name of the job should be, and what your email is. Most of the settings will be the same regardless of the job you submit. You will mostly just be changing the amount of allocated time and the number of nodes, for jobs that require parallelization.
+
 ```python
 #above line selects special python interpreter needed to run espresso
 #SBATCH -p slac
@@ -62,6 +65,7 @@ Next, notice the comments in the beginning. These lines will be ignored by Pytho
 ```
 
 Next, we import all the relevant ASE modules in for this calculation
+
 ```python
 from ase import *
 from ase.lattice.surface import *
@@ -128,6 +132,7 @@ As a first example, we will be setting up bulk fcc Pt. You will typically do thi
 <a name='lattice-constant-determination'></a>
 ### Lattice constant determination
 Find the [`bulk_Pt.py`](bulk_Pt.py) script in the `lattice` folder. This script determines the optimum lattice parameter for bulk fcc Pt using the equation of state model. Submit the script by running
+
 ```bash
 $ sbatch --job-name=$PWD bulk_Pt.py
 ```
@@ -145,6 +150,7 @@ Try using k = 6, 10, 14, and 18 in all three directions (i.e., k×k×k). Plot th
 <a name='pt-surfaces'></a>
 ## Pt surfaces
 Next we will set up various common surface terminations of Pt using the `ase.lattice.surface` module and optimize the geometry. We will focus on the 111 surface. The [`setup_111.py`](setup_111.py) file sets up the (111) surface, with specification of the size and lattice parameter. You can execute this directly from the terminal and view the results, e.g.:
+
 ```bash
 $ python setup_111.py
 $ ag slab.traj

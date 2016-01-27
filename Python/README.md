@@ -126,11 +126,13 @@ c **= a # c = c**a
 The usual comparison operators `==`, `!=`, `>`, `<`, `>=`, and `<=` are used for testing for equallity, inequality, greater than, less than, greater or equal than, and less than or equal than. These operators return `True` or `False`.
 
 The logical operators `and`, `or`, and `not` are convenient for using compound comparisons
+
 ```python
 1 == 1 and not 1 == 2   # returns True
 ```
 
 The membership operator `in` are convenient for testing if an element is inside a container.
+
 ```python
 1 in [1,2,3]       # True
 1 not in [1,2,3]   # False
@@ -249,6 +251,7 @@ If you try `b[0] = 2` you will get `TypeError: 'tuple' object does not support i
 ## Dictionaries
 
 Dictionaries are one of the most convenient containers in Python. To set up an empty dictionary
+
 ```python
 c = {}  # an empty dictionary
 ```
@@ -322,7 +325,8 @@ f.close()
 <a name='functions'></a>
 ## Functions
 
-Functions are defined using `def` and the proper scope indentation. To write a custom addition function,
+Functions are defined using `def` and the proper scope indentation. To write an addition function,
+
 ```python
 def add(a,b):
   return a + 2*b
@@ -335,10 +339,12 @@ Then `add(1,2)` will return `5`.
 A lot of useful modules are installed system-wide. They provide useful extended functionality. In addition to the `ase` modules, you will probably be using the `numpy` module most frequently. `numpy` provides `array` containers for matrix and matrix manipulation, similar to MATLAB.
 
 To use a module, run
+
 ```python
 import numpy as np
 ```
 this imports the `numpy` module as `np`, which is just a shorthand. All methods and classes contained in the `numpy` moduled can then be accessed using the dot notation
+
 ```python
 a = np.array([[1.,2.],[3.,4.]])   #initialize an array
 b = np.array([[2.,4.],[6.,8.]])   #initialize another array
@@ -347,6 +353,7 @@ d = a + b                         #sum
 ```
 
 If you only need certain methods in the module, you can import them selectively using `from`. Then the methods can be used without the module name and the dot notation.
+
 ```python
 from numpy import array
 a = array([[1.,2.],[3.,4.]])
@@ -358,6 +365,7 @@ Modules that are not loaded by default must be loaded using the `import` stateme
 ## ASE
 
 The Atomic Simulation Environment (ASE) is simply another Python module that can be loaded using
+
 ```python
 import ase
 ```
