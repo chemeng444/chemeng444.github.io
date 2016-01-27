@@ -18,6 +18,7 @@ permalink: /UNIX/
 For most of your work, you will be logging onto the [Sherlock cluster] (http://sherlock.stanford.edu) remotely and submitting jobs there. More details about logging on are included [here] (http://sherlock.stanford.edu/mediawiki/index.php/LogonCluster).
 
 First of all, make sure you download and install the latest version of XQuartz from http://xquartz.macosforge.org. To prevent X11 from timing out, open the terminal and type
+
 ```bash
 mkdir -p ~/.ssh
 echo $'\nHost *\n ForwardX11Timeout 1000000\n' >>~/.ssh/config
@@ -35,6 +36,7 @@ ssh -K -X sunetid@sherlock.stanford.edu
 to log on, where ```sunetid``` is your Stanford SUNET ID. ```kinit``` does not need to be rerun unless the Kererbos ticket is expired.
 
 Once you have logged in run the following commands (you only need to do this during the *first login*)
+
 ```bash
 ￼echo $'\nexport PATH=/home/vossj/suncat/bin:$PATH' >>~/.bashrc
 echo 'export LD_LIBRARY_PATH=/home/vossj/suncat/lib:/home/vossj/suncat/lib64:$LD_LIBRARY_PATH' >>~/.bashrc
@@ -48,7 +50,7 @@ This will enable you to run SUNCAT specific software on the Sherlock cluster, in
 These are some of the basic commands that you will be using in the shell on a daily basis.
 ___
 ```bash
-ag <file_name>
+ase-gui <file_name>
 ```
 Graphical user interface for the Atomic Simulation Environment (ASE). This is the tool you will be using for viewing or setting up your structures.
 ___
@@ -72,13 +74,13 @@ Copies files or directories from the source_file_with_path to the destination_pa
 ___
 
 ```bash
-cp –r <source_file_with_path> <destination_path>
+cp -r <source_file_with_path> <destination_path>
 ```
 Copy recursively. Useful for copying multiple files and directories (copies contents of the subdirectories). 
 ___
 
 ```bash
-cp –u <source_file_with_path> <destination_path>
+cp -u <source_file_with_path> <destination_path>
 ```
 Update. Copies only if the source file is newer than the destination file or the destination file does not exist. 
 ___
@@ -102,7 +104,7 @@ Lists the files and directories contained within the directory. Leave blank for 
 ___
 
 ```bash
-ls –t
+ls -t
 ```
 List files in chronological order.
 ___
@@ -140,7 +142,7 @@ ___
 ```bash
 rmdir <directory_name>
 ```
-Remove an empty directory. Use rm –r to remove recursively, such as if directory contains files (be careful).
+Remove an empty directory. Use rm -r to remove recursively, such as if directory contains files (be careful).
 ___
 
 ```bash
@@ -200,7 +202,7 @@ Check the status of your jobs. You will get something like the following:
 ___
 
 ```bash
-squeue –u your_SUNETID
+squeue -u your_SUNETID
 ```
 This will list your jobs.
 ___
@@ -208,6 +210,7 @@ ___
 squeue -u your_SUNETID -o '%.7i %.9P %.8j %.8u %.2t %.10M %.6D %R %Z'
 ```
 Shows more useful details about the job, including the working directory of the script. For example
+
 ```
 JOBID PARTITION     NAME     USER ST       TIME  NODES WORK_DIR
 1948301      slac /scratch  ctsai89  R   23:24:47      8 /scratch/users/ctsai89/TS_CH3_Au111/N_NEB
@@ -219,7 +222,7 @@ ___
 ```bash
 qstat -f <job_ID>
 ```
-Details about the job. Once the job has finished, this detail won’t be available.
+Details about the job. Once the job has finished, this detail won't be available.
 
 ___
 ```bash
