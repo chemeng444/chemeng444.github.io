@@ -1,6 +1,6 @@
 #!/home/vossj/suncat/bin/python
 #above line selects special python interpreter needed to run espresso
-#SBATCH -p slac
+#SBATCH -p iric 
 #################
 #set a job name
 #SBATCH --job-name=myjob
