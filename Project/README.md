@@ -1,7 +1,7 @@
 ---
 layout: page
 mathjax: false
-permalink: /Projects/
+permalink: /Project/
 ---
 
 ## Course Project
