@@ -5,6 +5,7 @@ permalink: /UNIX/
 ---
 
 ## Basic UNIX
+
 ## Contents
 1. [Using the UNIX Shell on the Sherlock Cluster] (#using-unix)
 2. [Basic Comamands] (#basic-commands)
@@ -12,7 +13,6 @@ permalink: /UNIX/
 4. [Text Editors] (#text-editors)
 5. [Submitting Jobs] (#submitting-jobs)
 
-<a name='using-unix'></a>
 ## Using the UNIX Shell on the Sherlock Cluster
 
 For most of your work, you will be logging onto the [Sherlock cluster] (http://sherlock.stanford.edu) remotely and submitting jobs there. More details about logging on are included [here] (http://sherlock.stanford.edu/mediawiki/index.php/LogonCluster).
@@ -51,119 +51,119 @@ This will enable you to run SUNCAT specific software on the Sherlock cluster, in
 
 These are some of the basic commands that you will be using in the shell on a daily basis.
 
-___
+____
 
 ```bash
 ase-gui <file_name>
 ```
 Graphical user interface for the Atomic Simulation Environment (ASE). This is the tool you will be using for viewing or setting up your structures.
 
-___
+____
 
 ```bash
 cd ..
 ```
 Move up one directory. 
 
-___
+____
 
 ```bash
 cd <directory_name>
 ```
 Changes directory to the one provided. If no directory is given, the default is to return you to your home directory (/home/username/) 
 
-___
+____
 
 ```bash
 cp <source_file_with_path> <destination_path>
 ```
 Copies files or directories from the source_file_with_path to the destination_path 
 
-___
+____
 
 ```bash
 cp -r <source_file_with_path> <destination_path>
 ```
 Copy recursively. Useful for copying multiple files and directories (copies contents of the subdirectories). 
 
-___
+____
 
 ```bash
 cp -u <source_file_with_path> <destination_path>
 ```
 Update. Copies only if the source file is newer than the destination file or the destination file does not exist. 
 
-___
+____
 
 ```bash
 mkdir <directory_name>
 ```
 Create new a new directory. 
 
-___
+____
 
 ```bash
 mv <source_file> <destination_file>
 ```
 Move or rename file.
 
-___
+____
 
 ```bash
 ls <directory_name>
 ```
 Lists the files and directories contained within the directory. Leave blank for present directory.
 
-___
+____
 
 ```bash
 ls -t
 ```
 List files in chronological order.
 
-___
+____
 
 ```bash
 ls -la
 ```
 List all files even those starting with a dot '.' which are generally not listed. 
 
-___
+____
 
 ```bash
 ls | more
 ```
 If the number of files in a directory is too large to fit in a single screen this command lists files and directories page after page on spacebar keystroke. 
 
-___
+____
 
 ```bash
 pwd
 ```
 Provides the “present working directory,” i.e.   the current folder.
 
-___
+____
 
 ```bash
 rm <file>
 ```
 Remove files. This is always *permanent*.
 
-___
+____
 
 ```bash
 rm -r <file_or_directory_with_path>
 ```
 Remove file or the directory and its contents recursively. 
 
-___
+____
 
 ```bash
 rmdir <directory_name>
 ```
 Remove an empty directory. Use rm -r to remove recursively, such as if directory contains files (be careful).
 
-___
+____
 
 ```bash
 cat <file_name>
@@ -174,7 +174,7 @@ Print out contents of a text file or files within the shell.
 ## Wildcards
 Wildcards can be used to perform commands on multiple files simultaneously.
 
-___
+____
 
 ```bash
 ?
@@ -182,7 +182,7 @@ ___
 
 Single character. Example: ```ag neb?.traj neb??.traj``` will use ```ag``` to open all files containing one or two characters between neb and .traj
 
-___
+____
 
 ```bash
 *
@@ -203,7 +203,7 @@ sbatch <script_file>
 ```
 Submit the job defined by the script file to the queue.
 
-___
+____
 
 ```bash
 sbatch --job-name=$PWD <script_file>
@@ -226,14 +226,14 @@ Check the status of your jobs. You will get something like the following:
         1787348_11    normal      ida  reaganc PD       0:00     32 (Resources)
            1904877    normal cftr_ref  jadeshi PD       0:00      1 (QOSMaxCpusPerUserLimit)
 ```
-___
+____
 
 ```bash
 squeue -u your_SUNETID
 ```
 This will list your jobs.
 
-___
+____
 
 ```bash
 squeue -u your_SUNETID -o '%.7i %.9P %.8j %.8u %.2t %.10M %.6D %R %Z'
@@ -247,14 +247,14 @@ JOBID PARTITION     NAME     USER ST       TIME  NODES WORK_DIR
 1948506      slac /home/ct  ctsai89  R   19:57:06      1 /scratch/users/ctsai89/Class_remaining/Ag211/fbl
 1948302      slac /scratch  ctsai89  R   23:24:11      7 /scratch/users/ctsai89/TS_CH3_Au111/B_NEB
 ```
-___
+____
 
 ```bash
 qstat -f <job_ID>
 ```
 Details about the job. Once the job has finished, this detail won't be available.
 
-___
+____
 
 ```bash
 scancel <job_ID>

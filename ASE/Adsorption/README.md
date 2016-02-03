@@ -24,7 +24,7 @@ In the second tutorial, you will be calculating the dissociative adsorption of H
 In this exercise you will be calculating the dissociative adsorption of H<sub>2</sub>O on the Pt(111) surface from the previous exercise. The dissociative adsorption energy is defined as:
 <div>
 $$
-\Delta E\_\mathrm{ads} = E\_\mathrm{Pt(111) + OH\* + H\*}  - E\_\mathrm{Pt(111)} - E\_\mathrm{H\_2O}
+\Delta E_\mathrm{ads} = E_\mathrm{Pt(111) + OH* + H*}  - E_\mathrm{Pt(111)} - E_\mathrm{H_2O}
 $$
 
 </div>
