@@ -13,10 +13,11 @@ permalink: /ASE/Getting_Started/
 To begin with, we will be looking at bulk metals and how to determine lattice constants, then we will be setting up metal surfaces. We will be using Pt throughout.
 ## Contents
 1. [A typical ASE script](#a-typical-ase-script)
-1. [Bulk Pt](#bulk-pt)
+1. [Bulk metal](#bulk-pt)
   1. [Lattice constant determination](#lattice-constant-determination)
   2. [Convergence with k-points](#convergence-with-k-points)
-2. [Pt surfaces](#pt-surfaces)
+2. [Setting up surfaces](#pt-surfaces)
+3. [Setting up clusters](#pt-clusters)
 
 <a name='a-typical-ase-script'></a>
 ## A typical ASE script
@@ -171,3 +172,6 @@ $ sbatch --job-id=$PWD run_Pt111.py
 where again `--job-id=$PWD` will use the present working directory for the the SLURM (the job submission system) job name.
 
 Try changing the number of k-points in the x and y-direction (i.e., k×k×1) using k = 4, 6, and 8. There are 7 Å of vacuum in the z-direction so 1 k-point is sufficient.
+
+<a name='pt-clusters'></a>
+## Pt clusters
