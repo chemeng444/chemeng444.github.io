@@ -44,7 +44,7 @@ You are required to perform the following calculations:
 20% kinetics
 30% calculations
 
-1. Complete the [three exercises](ASE/).
+1. Complete the [three exercises](../ASE/).
 2. Setup a \\(M_{13}\\) cluster and a (111) surface and calculate adsorption energies for all intermediates. Make sure to calculate:
 3. Calculate transition states for the first step (\\(N_2\\) dissociation) using the fixed bond-length method. Extra credit for calculating the hydrogenation barriers.
 4. Vibrational frequency and free energy calculations (initial, transition, and final states)

@@ -45,24 +45,25 @@ atoms = read('surface.traj')
 
 #set up espresso calculator with 20 extra bands
 #and 4x4x1 k-point sampling
-calc = espresso(pw=500,	            #plane-wave cutoff
-                dw=5000,	    #density cutoff
-                xc='BEEF-vdW',	    #exchange-correlation functional
+calc = espresso(pw=500,             #plane-wave cutoff
+                dw=5000,            #density cutoff
+                xc='BEEF-vdW',      #exchange-correlation functional
                 kpts=(4,4,1),       #k-point sampling;
-                nbands=-20,	    #20 extra bands besides the bands needed to hold
-                		    #the valence electrons
+                nbands=-20,         #20 extra bands besides the bands needed to hold
+                                    #the valence electrons
                 sigma=0.1,
+                psppath='/home/vossj/suncat/psp/gbrv1.5pbe',    #pseudopotential path
                 convergence= {'energy':1e-5, #convergence parameters
-			      'mixing':0.1,
-			      'nmix':10,
-			      'mix':4,
-			      'maxsteps':500,
-        	              'diag':'david'
-        	              },
+                              'mixing':0.1,
+                              'nmix':10,
+                              'mix':4,
+                              'maxsteps':500,
+                              'diag':'david'
+                              },
                 dipole={'status':True}, #dipole correction to account for periodicity in z
                 beefensemble = True,
                 printensemble =True,
-                outdir='calcdir')	#output directory for Quantum Espresso files
+                outdir='calcdir')    #output directory for Quantum Espresso files
 
 # set constraints. these should already be in place
 # if you used the generic scripts for 

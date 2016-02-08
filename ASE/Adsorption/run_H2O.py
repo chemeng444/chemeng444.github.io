@@ -41,8 +41,8 @@ from ase.dft.bee import BEEF_Ensemble
 import cPickle as pickle
 from ase.thermochemistry import IdealGasThermo
 
-name = 'H2O'
-atoms = molecule('H2O')
+name = 'N2'
+atoms = molecule('N2')
 
 calc = espresso(pw=500,	        #plane-wave cutoff
                 dw=5000,		#density cutoff
@@ -51,6 +51,7 @@ calc = espresso(pw=500,	        #plane-wave cutoff
                 nbands=-10,	    #10 extra bands besides the bands needed to hold
                 				#the valence electrons
                 sigma=0.1,
+                psppath='/home/vossj/suncat/psp/gbrv1.5pbe',    #pseudopotential
                 convergence= {'energy':1e-5,
 					               'mixing':0.1,
 					               'nmix':10,
@@ -64,9 +65,7 @@ calc = espresso(pw=500,	        #plane-wave cutoff
 
 atoms.set_calculator(calc)
 
-vibrateatoms=[]
-for i in range(len(atoms)):
-        vibrateatoms.append(i)
+vibrateatoms = [atom.index for atom in atoms]
 
 dyn = QuasiNewton(atoms, logfile= 'H2O.log', trajectory='H2O.traj')
 dyn.run(fmax=0.05)
@@ -83,6 +82,7 @@ calcvib = vibespresso(pw=500,	#plane-wave cutoff
                 nbands=-10,	#10 extra bands besides the bands needed to hold
                 					#the valence electrons
                 sigma=0.1,
+                psppath='/home/vossj/suncat/psp/gbrv1.5pbe',    #pseudopotential
                 convergence= {'energy':1e-5,
 					               'mixing':0.1,
 					               'nmix':10,

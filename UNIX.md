@@ -4,52 +4,18 @@ mathjax: false
 permalink: /UNIX/
 ---
 
+# Getting Started
+1. [Logging Into the Computing Clusters](../Clusters/)
+2. [Basic UNIX](../UNIX/)
+3. [Python](../Python/)
+
 ## Basic UNIX
 
 ## Contents
-1. [Using the Sherlock Cluster](#using-unix)
-2. [Using the CEES Cluster](#using-cees)
-3. [Basic Comamands](#basic-commands)
-4. [Wildcards](#wildcards)
-5. [Text Editors](#text-editors)
-6. [Submitting Jobs](#submitting-jobs)
-
-## Using the Sherlock Cluster
-
-For most of your work, you will be logging onto the [Sherlock cluster](http://sherlock.stanford.edu) remotely and submitting jobs there. More details about logging on are included [here](http://sherlock.stanford.edu/mediawiki/index.php/LogonCluster).
-
-First of all, make sure you download and install the latest version of [XQuartz](http://xquartz.macosforge.org). In Mac OSX, to prevent X11 from timing out, open the terminal and type:
-
-```bash
-mkdir -p ~/.ssh
-echo $'\nHost *\n ForwardX11Timeout 1000000\n' >>~/.ssh/config
-```
-
-To connect to the Sherlock cluster, type
-
-```bash
-kinit sunetid@stanford.edu
-```
-
-to authenticate in Kerberos, then
-
-```bash
-ssh -K -X sunetid@sherlock.stanford.edu
-```
-to log on, where ```sunetid``` is your Stanford SUNET ID. ```kinit``` does not need to be rerun unless the Kererbos ticket is expired. On Mac OSX you can type ```klist``` to check the status of the ticket.
-
-Once you have logged in run the following commands (you only need to do this during the *first login*)
-
-```bash
-￼echo $'\nexport PATH=/home/vossj/suncat/bin:$PATH' >>~/.bashrc
-echo 'export LD_LIBRARY_PATH=/home/vossj/suncat/lib:/home/vossj/suncat/lib64:$LD_LIBRARY_PATH' >>~/.bashrc
-source ~/.bashrc
-```
-This will enable you to run SUNCAT specific software on the Sherlock cluster, including the ASE interface to Quantum ESPRESSO.
-
-<a name='using-cees'></a>
-## Using the CEES Cluster
-
+1. [Basic Comamands](#basic-commands)
+2. [Wildcards](#wildcards)
+3. [Text Editors](#text-editors)
+4. [Submitting Jobs](#submitting-jobs)
 
 <a name='basic-commands'></a>
 ## Basic Commands

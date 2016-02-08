@@ -56,6 +56,7 @@ m = multiespresso(ncalc=intermediate_images,outdirprefix='ekspressen',
                   kpts=(4,4,1),
                   nbands=-20,
                   spinpol=False,
+                  psppath='/home/vossj/suncat/psp/gbrv1.5pbe',
                   dipole={'status':True},
                   output = {'avoidio':True,'removewf':True,'wf_collect':False},
                   convergence={'energy':1e-5,'mixing':0.25,'maxsteps':300})

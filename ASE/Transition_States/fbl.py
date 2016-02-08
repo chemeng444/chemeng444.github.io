@@ -73,6 +73,7 @@ calc = espresso(pw=500,
                 kpts = (4, 4, 1), 
                 nbands = -10,
                 xc = 'BEEF-vdW', 
+                psppath='/home/vossj/suncat/psp/gbrv1.5pbe',
                 convergence = {'energy':1e-5,
                                'mixing':0.1,
                                'nmix':10,
@@ -101,8 +102,6 @@ for step, delta in enumerate(xrange(0,30,1)):
     if step < numsteps:
         atoms.set_distance(atom1, atom2, d, fix=0.5)
 
-        #traj = PickleTrajectory('i'+str(delta)+'.traj','w',atoms)
-
         qn = QuasiNewton(atoms, trajectory='i'+str(delta)+'.traj')
         qn.run(fmax=0.05)
         
@@ -122,5 +121,4 @@ f.close()
 ens = BEEF_Ensemble(calc)
 ens.get_ensemble_energies()
 ens.write('fbl.bee')
-
 del sys, calc, ens

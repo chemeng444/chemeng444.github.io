@@ -56,6 +56,7 @@ calc = espresso(pw=500,           #plane-wave cutoff
                 nbands=-10,       #10 extra bands besides the bands needed to hold
                                   #the valence electrons
                 sigma=0.1,
+                psppath='/home/vossj/suncat/psp/gbrv1.5pbe',    #pseudopotential path
                 convergence= {'energy':1e-5,
                               'mixing':0.1,
                               'nmix':10,

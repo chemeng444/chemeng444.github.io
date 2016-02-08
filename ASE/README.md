@@ -4,12 +4,12 @@ mathjax: true
 permalink: /ASE/
 ---
 
-## ASE Tutorials
+# ASE Tutorials
 1. [Getting Started](Getting_Started/)
 2. [Adsorption](Adsorption/)
 3. [Transition States](Transition_States/)
 
-## Introduction
+## Introduction to ASE
 
 ### Atomic Simulation Environment (ASE)
 Currently, most of us at SUNCAT use the Quantum ESPRESSO calculator as implemented in the Atomic Simulation Envrionment (ASE), which is written in Python. ASE provides Python modules for manipulating atoms, performing calculations, and analyzing and visualizing the results. ASE scripts are simply regular Python scripts that incorporate the ASE modules. 

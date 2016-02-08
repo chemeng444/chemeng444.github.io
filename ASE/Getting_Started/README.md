@@ -4,7 +4,7 @@ mathjax: false
 permalink: /ASE/Getting_Started/
 ---
 
-## ASE Tutorials
+# ASE Tutorials
 1. [Getting Started](../Getting_Started/)
 2. [Adsorption](../Adsorption/)
 3. [Transition States](../Transition_States/)
