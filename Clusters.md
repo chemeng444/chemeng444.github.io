@@ -139,9 +139,27 @@ source ~/.bashrc
 
 This will enable you to run SUNCAT specific software on the Sherlock cluster, including the ASE interface to Quantum ESPRESSO.
 
+There are two file partitions, the `home` and the `scratch` partition. Go ahead and make a symbolic link to the `scratch` partition using:
+
+```bash
+ln -s $SCRATCH scratch
+```
+
+Perform all your calculations from the scratch partition.
+
 **CEES only**:
 
 If you access the CEES cluster from off-campus or wireless connection at Stanford Residences, you need to connect to Stanford’s VPN service before login to the cluster. The information regarding to Stanford’s VPN can be found [here](https://uit.stanford.edu/service/vpn).
+
+Create a folder in `/data/cees/`, from where you will create additional folders for performing your calculations. Type the following to create a directory and a symbolic link from the home directory (replacing `sunetid` with your SUNetID):
+
+```bash
+export SUNETID=sunetid
+mkdir /data/cees/$SUNETID
+ln -s /data/cees/$SUNETID
+```
+
+
 
 ____
 

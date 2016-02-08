@@ -4,7 +4,7 @@ mathjax: false
 permalink: /ASE/Transition_States/
 ---
 
-## ASE Tutorials
+## ASE Tutorials    
 1. [Getting Started](../Getting_Started/)
 2. [Adsorption](../Adsorption/)
 3. [Transition States](../Transition_States/)
@@ -13,12 +13,21 @@ permalink: /ASE/Transition_States/
 
 In this final tutorial, you will be calculating the transition state energy using the nudged elastic band (NEB) and the fixed bond length (FBL) method.
 
+
 ## Contents
 1. [Nudged elastic band calculation](#nudged-elastic-band-calculation)
 2. [Fixed bond length calculation](#fixed-bond-length-calculation)
 3. [Vibrational frequencies](#vibrational-frequencies)
 4. [Reaction rate](#reaction-rate)
 
+## Required Files
+
+Run the following 
+
+```bash
+wget http://chemeng444.github.io/ASE/Transition_States/download_files_2.sh
+./download_files.sh
+```
 
 <a name='nudged-elastic-band-calculation'></a>
 ## Nudged elastic band

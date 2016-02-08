@@ -31,28 +31,20 @@
 #################
 
 from ase import *
-from ase.lattice.surface import *
+from ase import io
+from ase.cluster.icosahedron import Icosahedron
 from ase.optimize import *
-from ase.constraints import *
 from espresso import espresso
 
-name = 'Pt111'
-
-#create a (111) surface slab of 2x2x3
-#(2x2 surface area; 3 layers along surface normal)
-#7 angstrom vacuum layer added on each side
-
-a = 3.989 #lattice parameter for fcc Pt. Use your optimized value
-          #from the previous calculations
-
-slab = fcc111('Pt', a=a, size=(2,2,3), vacuum=7.0)    #function for setting up a fcc(111) surface
+# read in the cluster
+name = 'PtCu13.traj'
+atoms = io.read('cluster.traj')
 
 #espresso calculator setup
 calc = espresso(pw=500,           #plane-wave cutoff
                 dw=5000,          #density cutoff
                 xc='BEEF-vdW',    #exchange-correlation functional
-                kpts=(4,4,1),     #k-point sampling;
-                                  #no dispersion to be sampled along z
+                kpts='gamma',     #k-point sampling. 'gamma' for (1,1,1)
                 nbands=-10,       #10 extra bands besides the bands needed to hold
                                   #the valence electrons
                 sigma=0.1,
@@ -66,11 +58,6 @@ calc = espresso(pw=500,           #plane-wave cutoff
                              },  #convergence parameters
                 outdir='calcdir') #output directory for Quantum Espresso files
 
-mask = [atom.z < 10 for atom in atoms]      # atoms in the structure to be fixed
-fixatoms = FixAtoms(mask=mask)
-slab.set_constraint(fixatoms) #fix everything but the top layer atoms
-slab.rattle()                 #define random displacements to the atomic positions before optimization
-
-slab.set_calculator(calc)                       #connect espresso to slab
-qn = QuasiNewton(slab, trajectory=name+'.traj') #relax slab
+atoms.set_calculator(calc)                       #connect espresso to cluster
+qn = QuasiNewton(atoms, trajectory=name+'.traj') #relax atoms
 qn.run(fmax=0.05)                               #until max force<=0.05 eV/AA

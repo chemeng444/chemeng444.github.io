@@ -40,6 +40,7 @@ from ase.units import kJ
 from ase import *
 from espresso import espresso
 
+metal = 'Pt'
 a=3.97     #initial guess for lattice constant
 b=a/2.
 strains = np.linspace(0.97, 1.03, 7) #range for scaling of latt. consts.
@@ -48,26 +49,27 @@ volumes = []  #we'll store unit cell volumes and total energies in these lists
 energies = []
 #setup up Quantum Espresso calculator
 calc = espresso(pw=500, #plane-wave cutoff
-            dw=5000,    #density cutoff
-            xc='BEEF-vdW',    #exchange-correlation functional
-            kpts=(11,11,11), #sampling grid of the Brillouin zone
-                        #(is internally folded back to the
-                             #irreducible Brillouin zone)
-            nbands=-10, #10 extra bands besides the bands needed to hold
-                        #the valence electrons
-            sigma=0.1,
-            convergence= {'energy':1e-5,    #convergence parameters
-                          'mixing':0.1,
-                          'nmix':10,
-                          'mix':4,
-                          'maxsteps':500,
-                          'diag':'david'
-                          },  
-            outdir='calcdir') #output directory for Quantum Espresso files
+                dw=5000,    #density cutoff
+                xc='BEEF-vdW',    #exchange-correlation functional
+                kpts=(11,11,11), #sampling grid of the Brillouin zone
+                            #(is internally folded back to the
+                                 #irreducible Brillouin zone)
+                nbands=-10, #10 extra bands besides the bands needed to hold
+                            #the valence electrons
+                sigma=0.1,
+                convergence= {'energy':1e-5,    #convergence parameters
+                              'mixing':0.1,
+                              'nmix':10,
+                              'mix':4,
+                              'maxsteps':500,
+                              'diag':'david'
+                              }, 
+                psppath='/home/vossj/suncat/psp/gbrv1.5pbe',
+                outdir='calcdir') #output directory for Quantum Espresso files
 
 for i in strains: #loop over scaling factors
     #build Pt unit cell
-    atoms=Atoms(symbols='Pt',positions=[(0.0,0.0,0.0)],
+    atoms=Atoms(symbols=metal,positions=[(0.0,0.0,0.0)],
                 cell=[[0., b*i, b*i], #primitive cell for face-centered cubic structure
                       [b*i, 0., b*i],
                       [b*i, b*i, 0.]])
@@ -82,6 +84,7 @@ for i in strains: #loop over scaling factors
 eos = EquationOfState(volumes, energies) #Fit calculated energies at different
 v0, e0, B = eos.fit()                    #lattice constants to an
                                          #equation of state
+
 #output of lattice constant = cubic root of volume of conventional unit cell
 #fcc primitive cell volume = 1/4 * conventional cell volume 
 print 'Lattice constant:', (4.*v0)**(1./3.), 'AA'

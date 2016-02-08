@@ -10,12 +10,12 @@ permalink: /Project/
 3. [Summary of Requirements](#reqs)
 
 
-For the course project, you will be studying thermochemical ammonia synthesis on metallic clusters and surfaces. Each student will be assigned one metal or bimetallic alloy. 
+For the course project, you will be studying thermo-chemical ammonia synthesis on metallic clusters and surfaces. Each student will be assigned one metal or bimetallic alloy. 
 
 <a name='intro'></a>
 ## Introduction
 
-The thermochemical ammonia synthesis reaction proceeds as:
+The thermo-chemical ammonia synthesis reaction proceeds as:
 $$
 \begin{align}
 \mathrm{N\_{2\,(g)}} &\rightarrow \mathrm{2N\*}\\\\

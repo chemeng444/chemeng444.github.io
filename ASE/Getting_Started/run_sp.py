@@ -30,17 +30,16 @@
 #SBATCH --ntasks-per-node=16
 #################
 
-"""Bulk Pt(fcc) test"""
-
 from ase import *
 from espresso import espresso
 
-name = 'Pt-fcc'
+metal = 'Pt'
+name = metal+'-fcc'
 a = 3.989  # optimized lattice constant
 b = a/2
 
 #construct primitive Pt fcc cell
-bulk = Atoms(symbols='Pt',positions=[(0.0, 0.0, 0.0)],
+bulk = Atoms(symbols=metal,positions=[(0.0, 0.0, 0.0)],
              cell=[[0., b, b],
                    [b, 0., b],
                    [b, b, 0.]])

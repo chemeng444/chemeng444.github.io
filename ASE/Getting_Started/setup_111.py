@@ -9,10 +9,11 @@ from ase import io
 #(2x2 surface area; 3 layers along surface normal)
 #7 angstrom vacuum layer added on each side
 
+metal = 'Pt'
 a = 3.989 #lattice parameter for fcc Pd. Use your optimized value
       #from the previous calculations
 
-slab = fcc111('Pt', a=a, size=(2,2,3), vacuum=7.0)    #function for setting up a fcc(111) surface
+slab = fcc111(metal, a=a, size=(2,2,3), vacuum=7.0)    #function for setting up a fcc(111) surface
 
 # mask for atoms with z-axis less than 10 A
 # set constraint to Fix Atoms

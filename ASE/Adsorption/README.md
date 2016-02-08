@@ -18,6 +18,15 @@ In the second tutorial, you will be calculating the dissociative adsorption of H
 2. [Adsorption sites](#adsorption-sites)
 3. [Dissociative adsorption](#dissociative-adsorption)
 
+## Required Files
+
+Run the following 
+
+```bash
+wget http://chemeng444.github.io/ASE/Adsorption/download_files_2.sh
+./download_files_2.sh
+```
+
 <a name='gaseous-molecules'></a>
 ## Gaseous molecules
 
