@@ -169,13 +169,13 @@ ____
 Once you are logged into the terminal, run:
 
 ```bash
-> ase-gui
+ase-gui
 ```
 
 and make sure a graphical interface appears. Next, run Python in interactive mode by typing:
 
 ```bash
-> python
+python
 ```
 
 and make sure the following commands work:
