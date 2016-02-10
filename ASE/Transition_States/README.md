@@ -15,49 +15,20 @@ In this final tutorial, you will be calculating the transition state energy usin
 
 
 ## Contents
-1. [Nudged elastic band calculation](#nudged-elastic-band-calculation)
 2. [Fixed bond length calculation](#fixed-bond-length-calculation)
 3. [Vibrational frequencies](#vibrational-frequencies)
 4. [Reaction rate](#reaction-rate)
+5. [Nudged elastic band calculation](#nudged-elastic-band-calculation)
+
 
 ## Required Files
 
 Run the following 
 
 ```bash
-wget http://chemeng444.github.io/ASE/Transition_States/download_files_2.sh
+wget http://chemeng444.github.io/ASE/Transition_States/download_files_3.sh
 ./download_files.sh
 ```
-
-<a name='nudged-elastic-band-calculation'></a>
-## Nudged elastic band
-
-To perform a nudged elastic band (NEB) calculation, one needs to provide an initial and final state trajectory. A series of "images" between the initial and final states will then be used to determine the minimum energy path. This band of images will be relaxed. For a NEB calculation, you only need to provide the initial and final state and the number of images in between. Go through the [`neb.py`](neb.py) script. Typically 5~7 images between the initial and final states will be sufficient. Intermediate images will be generated using a linear interpretation of the initial and final trajectory. An odd number of images should be chosen so that the one image will be at the transition state. NEB calculations can take a long time, and the [`neb_restart.py`](neb_restart.py) should be used to read in the previous images. You can also start at with k-points to speed up the calculation, and then restart the calculation with higher k-points.
-
-In the `neb.py` file make sure the line specifying the number of nodes.
-
-```python
-#SBATCH --nodes=5
-```
-corresponds to the number of _intermediate_ images. Check that `intermediate_images = 5` matches. 
-
-Both `neb.py` and `neb_restart.py` scripts require the initial and final states of the reaction path to be provided. This is specified in the lines:
-
-```python
-initial = io.read('neb0.traj')
-final = io.read('neb6.traj')
-```
-
-make sure that the trajectory files are in the directory and are named in the same manner. For the `neb_restart.py` script, the initial and final trajectories must be named in the `neb*.traj` format, where `*` is a number. The script will read in all intermediate images based on the number in the initial and final trajectory.
-
-To view all the trajectory files, run the following command
-
-```bash
-ag neb*.traj –n -1
-```
-
-where all files of the form `neb*.traj` (with * referring to any number of characters) will be opened in ag. The `-n` flag specifies the image within each trajectory file. Since you are optimizing the entire reaction path, each step in the NEB will be stored in each image file. Specifying `-n -1` tells ag to only read the last image of each file (i.e. the most current step).
-
 
 <a name='fixed-bond-length-calculation'></a>
 ## Fixed bond length calculation
@@ -101,3 +72,32 @@ which will display images 1 through 22 within the combined trajectory file. The 
 <a name='vibrational-frequencies'></a>
 ## Vibrational frequencies
 Calculate the vibrational frequencies for transition state and the final state using the [`run_freq.py`](run_freq.py) script. Use `ag` to view the vibrational modes, which are written out as `vib*.traj` files. There should be 3N vibrational modes for all adsorbed states, and 3N - 1 vibrational modes for the transition state.
+
+<a name='nudged-elastic-band-calculation'></a>
+## Nudged elastic band
+
+To perform a nudged elastic band (NEB) calculation, one needs to provide an initial and final state trajectory. A series of "images" between the initial and final states will then be used to determine the minimum energy path. This band of images will be relaxed. For a NEB calculation, you only need to provide the initial and final state and the number of images in between. Go through the [`neb.py`](neb.py) script. Typically 5~7 images between the initial and final states will be sufficient. Intermediate images will be generated using a linear interpretation of the initial and final trajectory. An odd number of images should be chosen so that the one image will be at the transition state. NEB calculations can take a long time, and the [`neb_restart.py`](neb_restart.py) should be used to read in the previous images. You can also start at with k-points to speed up the calculation, and then restart the calculation with higher k-points.
+
+In the `neb.py` file make sure the line specifying the number of nodes.
+
+```python
+#SBATCH --nodes=5
+```
+corresponds to the number of _intermediate_ images. Check that `intermediate_images = 5` matches. 
+
+Both `neb.py` and `neb_restart.py` scripts require the initial and final states of the reaction path to be provided. This is specified in the lines:
+
+```python
+initial = io.read('neb0.traj')
+final = io.read('neb6.traj')
+```
+
+make sure that the trajectory files are in the directory and are named in the same manner. For the `neb_restart.py` script, the initial and final trajectories must be named in the `neb*.traj` format, where `*` is a number. The script will read in all intermediate images based on the number in the initial and final trajectory.
+
+To view all the trajectory files, run the following command
+
+```bash
+ag neb*.traj –n -1
+```
+
+where all files of the form `neb*.traj` (with * referring to any number of characters) will be opened in ag. The `-n` flag specifies the image within each trajectory file. Since you are optimizing the entire reaction path, each step in the NEB will be stored in each image file. Specifying `-n -1` tells ag to only read the last image of each file (i.e. the most current step).

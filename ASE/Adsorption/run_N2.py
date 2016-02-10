@@ -67,7 +67,7 @@ atoms.set_calculator(calc)
 
 vibrateatoms = [atom.index for atom in atoms]
 
-dyn = QuasiNewton(atoms, logfile= 'H2O.log', trajectory='H2O.traj')
+dyn = QuasiNewton(atoms, logfile= 'N2.log', trajectory='N2.traj')
 dyn.run(fmax=0.05)
 
 energy = atoms.get_potential_energy()
@@ -115,7 +115,7 @@ thermo = IdealGasThermo(vib_energies=vib_energies,
 # change for your operating conditions
 freeenergy = thermo.get_gibbs_energy(temperature=300,pressure=101325)
 
-f=open('H2O.energy','w')
+f=open('N2.energy','w')
 f.write('Potential energy: '+str(energy)+'\n'+'Free energy: '+str(freeenergy)+'\n')
 f.close
 

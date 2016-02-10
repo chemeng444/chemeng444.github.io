@@ -4,15 +4,17 @@ mathjax: false
 permalink: /ASE/Getting_Started/
 ---
 
-# ASE Tutorials
+# ASE Tutorials #
 1. [Getting Started](../Getting_Started/)
 2. [Adsorption](../Adsorption/)
 3. [Transition States](../Transition_States/)
 
-## Getting Started
+## Getting Started ##
+
 To begin with, we will be looking at bulk metals and how to determine lattice constants, then we will be setting up metal surfaces. We will be using Pt throughout.
 
-## Contents
+## Contents ##
+
 1. [A Typical ASE Script](#a-typical-ase-script)
 2. [Bulk metal](#bulk)
   1. [Lattice Constant Determination](#lattice-constant-determination)
@@ -20,7 +22,7 @@ To begin with, we will be looking at bulk metals and how to determine lattice co
 3. [Setting up Surfaces](#surfaces)
 4. [Setting up Clusters](#clusters)
 
-### Required Files
+### Required Files ###
 
 Obtain the required files by running
 
@@ -32,7 +34,8 @@ wget http://chemeng444.github.io/ASE/Getting_Started/download_files_1.sh
 This should create a folder called `Exercise_1_Getting_Started/` containing all the starter scripts you will need.
 
 <a name='a-typical-ase-script'></a>
-### A Typical ASE Script
+
+### A Typical ASE Script ###
 
 Let's look at how a typical ASE script is written. Open the [`run_111.py`](run_111.py) script.
 
@@ -145,7 +148,9 @@ qn = QuasiNewton(slab, trajectory=name+'.traj') #relax slab
 qn.run(fmax=0.05)                               #until max force<=0.05 eV/AA
 ```
 <a name='bulk'></a>
-### Bulk Metal
+
+### Bulk Metal ###
+
 As a first example, we will be setting up a bulk fcc metal. You will typically do this when working with an entirely new system. 
 <a name='lattice-constant-determination'></a>
 ### Lattice Constant Determination
@@ -169,7 +174,9 @@ $ sbatch --job-name=$PWD run_sp.py
 **Requirement**: Try using k = 6, 10, 14, and 18 in all three directions (i.e., k×k×k). Plot the energy as a function of k-points. Pick one and try to justify why it would be a reasonable choice. Use the optimal k-point sampling to re-run the lattice optimization script again and check if the results are consistent. The relevant k-points will usually be known, since we have consistent settings that we use throughout the group. In principle, one should always check for convergence when working with a new system.
 
 <a name='surfaces'></a>
-### Metal Surfaces
+
+### Metal Surfaces ###
+
 Next we will set up various common surface terminations of a metal using the `ase.lattice.surface` module and optimize the geometry. We will focus on the 111 surface. The [`setup_111.py`](setup_111.py) file sets up the (111) surface, with specification of the size and lattice parameter. **Edit the file and replace Pt with your metal and the lattice constant with your optimized result from running **`bulk_metal.py`. You can execute this directly from the terminal and view the results, e.g.:
 
 ```bash
@@ -192,7 +199,8 @@ Try changing the number of k-points in the x and y-direction (i.e., k×k×1) usi
 **Requirement:** Plot the change in the total slab energy as a function of the different k-points. How many k-points are sufficient?
 
 <a name='clusters'></a>
-### Metal Clusters
+
+### Metal Clusters ###
 
 Next we will use the `ase.cluster.icosahedron` module to set up metal clusters. The [`setup_cluster.py`](setup_cluster.py) script demonstrates how to set up a 13 atom metallic cluster. **Change Pt into the metal or alloy you have been assigned**. This can be run within the login node using
 

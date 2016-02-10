@@ -11,7 +11,7 @@ permalink: /ASE/Adsorption/
 
 ## Adsorption on Surfaces
 
-In the second tutorial, you will be calculating the dissociative adsorption of H<sub>2</sub>O onto the Pt(111) surface.
+In the second tutorial, you will be calculating the dissociative adsorption of N<sub>2</sub> onto the your cluster and (111) surface.
 
 ## Contents
 1. [Gaseous molecules](#gaseous-molecules)
@@ -38,31 +38,26 @@ $$
 
 </div>
 
-where OH\* and H\* refer to adsorbed OH and H. We have \\(E\_\mathrm{Pt(111)}\\) from the previous exercise, so we will need to calculate both \\(E\_\mathrm{Pt(111)+OH\* +H\*}\\) and \\(E\_\mathrm{H\_2O}\\) here. The [`run_H2O.py`](run_H2O.py) will calculate the optimized geometry, the electronic energy, as well as the vibrational modes of a gaseous H<sub>2</sub>O molecule. Run the script and check that the vibrational modes are reasonable.
+where OH\* and H\* refer to adsorbed OH and H. We have \\(E\_\mathrm{Pt(111)}\\) from the previous exercise, so we will need to calculate both \\(E\_\mathrm{Pt(111)+OH\* +H\*}\\) and \\(E\_\mathrm{H\_2O}\\) here. The [`run_N2.py`](run_N2.py) will calculate the optimized geometry, the electronic energy, as well as the vibrational modes of a gaseous N<sub>2</sub> molecule. Run the script and check that the vibrational modes are reasonable.
 
 <a name='adsorption-sites'></a>
 ## Adsorption sites
 
-There are four adsorption sites on the Pt(111) surface that a molecule can adsorb to: the fcc, hcp, top, and bridge sites. Follow the `ads_Pt111_H2O.py` script, which sets up a variety of configurations of adsorbed OH\* and H\*. In the script, an optimized structure for the Pt(111) surface is read, and then the adsorbate atoms are added manually. The `add_adsorbate()` function is used to add adsorbates:
+There are four adsorption sites on the Pt(111) surface that a molecule can adsorb to: the fcc, hcp, top, and bridge sites. Follow the `ads_Pt111_H2O.py` script, which sets up a variety of configurations of adsorbed N2\* and H\*. In the script, an optimized structure for the Pt(111) surface is read, and then the adsorbate atoms are added manually. The `add_adsorbate()` function is used to add adsorbates:
 
 ```python
-# add OH
-add_adsorbate(atoms, 'O', 1.5, (3.9,2.4)) #add ‘O’ atom onto “atoms” with height 1.5 above surface at x=3.9, y=2.4 
-add_adsorbate(atoms, 'H', 2.5, (3.9,2.4)) #add ‘H’ atom onto “atoms” with height 1 above O
-
-# add H
-add_adsorbate(atoms, 'H', 1.5, (4.7,2.4)) #add 'H' at x=4.7, y=2.4
+add_adsorbate(slab, 'N', 1.5, (3, 1.7))
+add_adsorbate(slab, 'N', 1.5, (1.5, 0.86))
 ```
 
 Alternatively, if you set up the surface using the `fcc111` or `fcc100` functions from the `ase.lattice.surface` module, you can use special keywords in the `add_adsorbate()` function to add adsorbates to special sites
 
 ```python
 atoms = fcc111(Pt, a = 3.989, size = (2,2,4), vacuum = 7.0)
-add_adsorbate(atoms, 'O', 1.5, 'fcc')
-add_adsorbate(atoms, 'H', 2.5, 'fcc')
+add_adsorbate(atoms, 'N', 1.5, 'fcc')
 ```
 
-This generates an FCC (111) surface and adds an OH onto the fcc site.
+This generates an FCC (111) surface and adds an N onto the fcc site.
 
 More information can be found [here](https://wiki.fysik.dtu.dk/ase/ase/surface.html).
 

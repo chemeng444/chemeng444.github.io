@@ -14,8 +14,6 @@ Final Report (70% - Due 3/11)
 1. [Project Description and Requirements](Project/)
 2. [Assignment of Metal Clusters](Project_Assignments/)
 
-## Tutorials
-
 ### Getting Started
 
 1. [Logging Into the Computing Clusters](Clusters/)
@@ -25,7 +23,7 @@ Final Report (70% - Due 3/11)
 ### Atomic Simulation Environment
 
 1. [Introduction to ASE](ASE/)
-2. [Exercise 1 - Getting Started with ASE (10% - Due 2/19)](ASE/Getting_Started/)
-3. [Exercise 2 - Adsorption Energies (10% - Due 2/26)](ASE/Adsorption/)
-4. [Exercise 3 - Transition States (10% - Due 3/4)](ASE/Transition_States/)
+2. [Project Part 1 - Getting Started with ASE (10% - Due 2/19)](ASE/Getting_Started/)
+3. [Project Part 2 - Adsorption Energies (10% - Due 2/26)](ASE/Adsorption/)
+4. [Project Part 3 - Transition States (10% - Due 3/4)](ASE/Transition_States/)
 

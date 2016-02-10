@@ -4,7 +4,7 @@ from ase.cluster.icosahedron import Icosahedron
 
 # replace with your assigned element and your optimized lattice parameter
 # if your assigned system is a binary alloy, specify element2 (e.g. 'Cu')
-element1 = 'Pt'
+element1 = 'Mo'
 element2 = 'Cu'
 a = None
 vacuum = 10.0
