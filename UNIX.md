@@ -18,6 +18,7 @@ permalink: /UNIX/
 4. [Submitting Jobs](#submitting-jobs)
 
 <a name='basic-commands'></a>
+
 ## Basic Commands
 
 These are some of the basic commands that you will be using in the shell on a daily basis.
@@ -142,6 +143,7 @@ cat <file_name>
 Print out contents of a text file or files within the shell.
 
 <a name='wildcards'></a>
+
 ## Wildcards
 Wildcards can be used to perform commands on multiple files simultaneously.
 
@@ -161,11 +163,13 @@ ____
 Any number of characters. Example: ```ls *.traj``` will list all ```.traj``` files.
 
 <a name='text-editors'></a>
+
 ## Text Editors
 There are several text editors available. Popular ones include ```vim``` and ```nano```. Most people at SUNCAT use ```vim```. To open a file, use ```vim file.txt``` to open a file named ```file.txt```.
 
 
 <a name='submitting-jobs'></a>
+
 ## Submitting Jobs
 These instructions are specific to the Sherlock cluster.
 

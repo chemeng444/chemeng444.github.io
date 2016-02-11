@@ -19,6 +19,7 @@ Half of the class have been assigned computing accounts on Sherlock and the othe
 4. [Making Sure Everything Works](#testing)
 
 <a name='installation'></a>
+
 ## Installation
 
 ### Mac OSX
@@ -35,6 +36,7 @@ echo $'\nHost *\n ForwardX11Timeout 1000000\n' >>~/.ssh/config
 
 
 ### Windows
+
 Download and install:
 
 * [PuTTY](https://www.putty.org/)
@@ -52,6 +54,7 @@ sudo apt-get install krb5-user
 ____
 
 <a name='logging'></a>
+
 ## Logging onto the Clusters
 
 For the [**Sherlock**](http://sherlock.stanford.edu) cluster, make sure to read through the login instructions [here](http://sherlock.stanford.edu/mediawiki/index.php/LogonCluster). You will be using your SUNetID to log on.
@@ -164,7 +167,8 @@ ln -s /data/cees/$SUNETID
 ____
 
 <a name='testing'></a>
-## Making Sure Everything Works
+
+## Making Sure Everything Works ##
 
 Once you are logged into the terminal, run:
 

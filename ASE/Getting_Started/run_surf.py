@@ -43,7 +43,7 @@ name = metal+'111'
 # read in the slab
 slab = io.read('slab.traj')
 
-# height below which to fix the slab
+# height below which to fix the slab, view your trajectory to confirm this
 fix_z_height = 10.0
 
 #espresso calculator setup

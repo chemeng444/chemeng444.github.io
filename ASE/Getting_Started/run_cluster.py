@@ -37,7 +37,7 @@ from ase.optimize import *
 from espresso import espresso
 
 # read in the cluster
-name = 'PtCu13.traj'
+name = 'PtCu13'
 atoms = io.read('cluster.traj')
 
 #espresso calculator setup
