@@ -132,6 +132,16 @@ table#t01 th    {
     <td>AgRu</td>
 </tr>
 <tr>
+    <td>fhashemi</td>
+    <td>Sherlock</td>
+    <td>IrAg</td>
+</tr>
+<tr>
+    <td>jasingh</td>
+    <td>Sherlock</td>
+    <td>IrCu</td>
+</tr>
+<tr>
     <td>jenniezh</td>
     <td>Sherlock</td>
     <td>PtMo</td>

@@ -82,7 +82,7 @@ to log onto Sherlock, where ```sunetid``` is your Stanford SUNET ID. ```kinit```
 For **CEES**, 
 
 ```bash
-ssh -X userid@cees-cluster.stanford.edu
+ssh -X ctsai89@cees-cluster.stanford.edu
 ```
 
 ### Windows
@@ -99,7 +99,7 @@ Start PuTTY, and:
 
 * “Session” → “Host Name” `sunetid@sherlock.stanford.edu` for **Sherlock** or `cees-cluster.stanford.edu` for **CEES**.
 * “Connection” → “SSH” → “X11” check “Enable X11 forwarding”
-* Back in “Session”, you can save these settings for next time
+* Back in “Session”, you can **save these settings for next time**.
 
 You can start putty several times, if you need several terminal windows; only one instance of kinit and Xming needed.
 
@@ -148,7 +148,7 @@ There are two file partitions, the `home` and the `scratch` partition. Go ahead 
 ln -s $SCRATCH scratch
 ```
 
-Perform all your calculations from the scratch partition.
+**Perform all your calculations from the scratch partition.**
 
 **CEES only**:
 
@@ -157,11 +157,11 @@ If you access the CEES cluster from off-campus or wireless connection at Stanfor
 Create a folder in `/data/cees/`, from where you will create additional folders for performing your calculations. Type the following to create a directory and a symbolic link from the home directory (replacing `sunetid` with your SUNetID):
 
 ```bash
-export SUNETID=sunetid
-mkdir /data/cees/$SUNETID
-ln -s /data/cees/$SUNETID
+mkdir /data/cees/$USER
+ln -s /data/cees/$USER
 ```
 
+**Make sure to perform all your work in this directory.**
 
 
 ____

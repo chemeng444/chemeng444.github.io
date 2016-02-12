@@ -50,6 +50,12 @@ a = 3.989  # optimized lattice constant
 kpts = [6, 8, 10, 14, 18]   # list of k-points to try
 energies = []
 
+# if Mo then use bcc crystal, otherwise fcc
+if metal == 'Mo':
+  crystal = 'bcc'
+else:
+  crystal = 'fcc'
+
 for k in kpts:
   if metal2:
     atoms = bulk(metal, crystal, a=a, cubic=True)
