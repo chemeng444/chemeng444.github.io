@@ -20,13 +20,13 @@ For the course project, you will be studying thermo-chemical ammonia synthesis o
 
 ## Introduction ##
 
-The thermo-chemical synthesis of ammonia is accomplished through the [Haber-Bosch process](https://en.wikipedia.org/wiki/Haber_process), where nitrogen gas reacts with hydrogen gas via:
+The thermo-chemical synthesis of ammonia is accomplished through the [Haber-Bosch process](http://en.wikipedia.org/wiki/Haber_process), where nitrogen gas reacts with hydrogen gas via:
 
 $$
 \mathrm{N_2+3H_2\rightarrow 2NH_3}
 $$
 
-This process is crucial for the industrial production of fertilizers and chemical feedstocks. Typically, an iron catalyst is used to stabilize the bond-breaking of the N<sub>2</sub> species. The reaction can be separated into elementary reaction steps ([Honkala et. al. (2015)](https://dx.doi.org/10.1126/science.1106435) for more details):
+This process is crucial for the industrial production of fertilizers and chemical feedstocks. Typically, an iron catalyst is used to stabilize the bond-breaking of the N<sub>2</sub> species. The reaction can be separated into elementary reaction steps ([Honkala et. al. (2005)](http://dx.doi.org/10.1126/science.1106435) for more details):
 
 $$
 \begin{align}
@@ -41,13 +41,15 @@ $$
 
 A free energy diagram is illustrated below:
 
-<center><img src="../Images/N2_path.jpg" alt="N2 path" style="width: 400px;"/>
-<br>Ammonia synthesis pathway on a Ru catalyst (<a href="https://dx.doi.org/10.1126/science.1106435">Honkala et. al. (2015)</a>)</center>
+<center><img src="../Images/N2_path.jpg" alt="N2 path" style="width: 450px;"/>
+<br>Ammonia synthesis pathway on a Ru catalyst (<a href="http://dx.doi.org/10.1126/science.1106435">Honkala et. al. (2005)</a>)</center>
 
-Due to the high operating pressures and temperatures required for this reaction, alternative catalysts are still needed for this process. [Medford et. al. (2015)](https://dx.doi.org/10.1016/j.jcat.2014.12.033) have suggested that the linear scaling between the dissociation energy of N<sub>2</sub> and its transition state energy prevents most catalysts from achieving a high rate. Assuming that the bond-breaking of N<sub>2</sub> is rate limiting, then traditional metal catalysts have a transition state that is too high in energy.
+Due to the high operating pressures and temperatures required for this reaction, alternative catalysts are still needed for this process. [Medford et. al. (2015)](http://dx.doi.org/10.1016/j.jcat.2014.12.033) have suggested that the linear scaling between the dissociation energy of N<sub>2</sub> and its transition state energy prevents most catalysts from achieving a high rate. Assuming that the bond-breaking of N<sub>2</sub> is rate limiting, then traditional metal catalysts have a transition state that is too high in energy. This is illustrated in the filled contour plot below, where the turnover frequency is plotted as a function of the transition state energy of the first N<sub>2</sub> bond breaking (*E*<sub>N-N</sub>) and the dissociation energy (∆*E*<sub>diss</sub>). A catalyst would need to behave differently from these extended surfaces in order to land in a more active region of the map. 
 
 <center><img src="../Images/N2_volcano.png" alt="N2 volcano" style="width: 400px;"/>
-<br>Filled contour plot for the turnover frequencies</center>
+<br>Filled contour plot for the turnover frequencies (Singh et. al. (2016))</center>
+
+We will be exploring 13-atom metal clusters as a system where such configurations might be found.
 
 Your goals for the project will be to: (1) explore this reaction to find unique adsorption configurations where the dissociation energy leads to a more favorable transition state energy, and (2) explore additional relations between the reaction intermediates in the pathway. You will be studying 13-atom metal clusters (M<sub>13</sub>) consisting of either pure metals or binary alloys. 
 
@@ -116,7 +118,7 @@ In addition, you may wish to address the following questions:
 * What are other factors that can affect adsorbate-metal interaction?
 * How important is the coordination number of the metal? Compare the metal cluster to the metal surface.
 
-You are welcome to share data amongst your peers to discuss broader trends. (We encourage you to use [Piazza](https://piazza.com/class/ij0k0xrcxrz5pa) for questions and discussions so you can help each other troubleshoot and share data. You may also include additional calculations into your project (scripts available), but this is not required:
+You are welcome to share data amongst your peers to discuss broader trends. (We encourage you to use [Piazza](http://piazza.com/class/ij0k0xrcxrz5pa) for questions and discussions so you can help each other troubleshoot and share data. You may also include additional calculations into your project (scripts available), but this is not required:
 
 * Density of states calculations on the surfaces
 * Error analysis using the BEEF ensembles
@@ -136,7 +138,12 @@ Your report should be between 3 to 5 pages long including figures and tables. Pl
 
 ## Research Paper ##
 
-We expect that your results will form the basis of a manuscript that we will be putting together as a class. 
+We expect that your results will form the basis of a manuscript that we will be putting together as a class. For previous class papers:
+
+* [(2011) Finite-Size Effects in O and CO Adsorption for the Late Transition Metals, *Topics in Catalysis*](http://dx.doi.org/10.1007/s11244-012-9908-x)
+* [(2015) Direct Water Decomposition on Transition Metal Surfaces: Structural Dependence and Catalytic Screening, *Catalysis Letters*](http://dx.doi.org/10.1007/s10562-016-1708-7).
+ 
+Notice how much the class size has grown!
 
 <a name='grading'></a>
 

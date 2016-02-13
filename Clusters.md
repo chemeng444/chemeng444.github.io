@@ -9,6 +9,8 @@ permalink: /Clusters/
 2. [Basic UNIX](../UNIX/)
 3. [Python](../Python/)
 
+____
+
 ## Logging Into the Computing Clusters
 
 Half of the class have been assigned computing accounts on Sherlock and the other half have been assigned accounts on CEES. Follow the instructions for using the one you have been assigned to and follow the tests to make sure everything is set up properly and functional.
@@ -16,6 +18,9 @@ Half of the class have been assigned computing accounts on Sherlock and the othe
 ## Contents
 1. [Installation](#installation)
 2. [Logging On](#logging)
+3. [First Time Logging On](#first-time)
+    1. [Sherlock](#first-time-sherlock)
+    2. [CEES](#first-time-cees)
 4. [Making Sure Everything Works](#testing)
 
 <a name='installation'></a>
@@ -39,9 +44,9 @@ echo $'\nHost *\n ForwardX11Timeout 1000000\n' >>~/.ssh/config
 
 Download and install:
 
-* [PuTTY](https://www.putty.org/)
-* [Kerberos](https://uit.stanford.edu/service/kerberos) (needed for Sherlock only)
-* [Xming](https://sourceforge.net/projects/xming/) (Note: disable automatic installation of PuTTY with Xming. The above installer is a newer version)
+* [PuTTY](http://www.putty.org/)
+* [Kerberos](http://uit.stanford.edu/service/kerberos) (needed for Sherlock only)
+* [Xming](http://sourceforge.net/projects/xming/) (Note: disable automatic installation of PuTTY with Xming. The above installer is a newer version)
 
 
 ### Linux (Debian-based, e.g. Ubuntu)
@@ -97,14 +102,14 @@ Next, launch Xming. You will always need to have this open in order to forward g
 
 Start PuTTY, and:
 
-* “Session” → “Host Name” `sunetid@sherlock.stanford.edu` for **Sherlock** or `cees-cluster.stanford.edu` for **CEES**.
+* “Session” → “Host Name” `sunetid@sherlock.stanford.edu` for **Sherlock** or `sunetid@cees-cluster.stanford.edu` for **CEES**.
 * “Connection” → “SSH” → “X11” check “Enable X11 forwarding”
 * Back in “Session”, you can **save these settings for next time**.
 
 You can start putty several times, if you need several terminal windows; only one instance of kinit and Xming needed.
 
 
-### Linux
+### Linux ###
 
 In a terminal (Sherlock only):
 
@@ -118,17 +123,23 @@ Then for **Sherlock**:
 ssh -X sunetid@sherlock.stanford.edu
 ```
 
-or for **CEES**:
-
-```bash
-ssh -X username@cees-cluster.stanford.edu
-```
-
-
 Open new terminals to run ssh again if you need several terminals on sherlock;
 `kinit` only needs to be run once per boot (or as long as the Kerberos ticket remains valid). Type `klist` to check the ticket's status.
 
+For **CEES**:
+
+```bash
+ssh -X sunetid@cees-cluster.stanford.edu
+```
+
+
 ____
+
+<a name='first-time'></a>
+
+### First Time Logging in ###
+
+<a name='first-time-sherlock'></a>
 
 **Sherlock only**:
 
@@ -150,11 +161,13 @@ ln -s $SCRATCH scratch
 
 **Perform all your calculations from the scratch partition.**
 
+<a name='first-time-cees'></a>
+
 **CEES only**:
 
-If you access the CEES cluster from off-campus or wireless connection at Stanford Residences, you need to connect to Stanford’s VPN service before login to the cluster. The information regarding to Stanford’s VPN can be found [here](https://uit.stanford.edu/service/vpn).
+If you access the CEES cluster from off-campus or wireless connection at Stanford Residences, you need to connect to Stanford’s VPN service before login to the cluster. The information regarding to Stanford’s VPN can be found [here](http://uit.stanford.edu/service/vpn).
 
-Create a folder in `/data/cees/`, from where you will create additional folders for performing your calculations. Type the following to create a directory and a symbolic link from the home directory (replacing `sunetid` with your SUNetID):
+Create a folder in `/data/cees/`, from where you will create additional folders for performing your calculations. Type the following to create a directory and a symbolic link from the home directory:
 
 ```bash
 mkdir /data/cees/$USER

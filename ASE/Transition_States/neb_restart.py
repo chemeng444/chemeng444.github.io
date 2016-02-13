@@ -1,35 +1,7 @@
-#!/home/vossj/suncat/bin/python
-#above line selects special python interpreter needed to run espresso
-#SBATCH -p slac
-#################
-#set a job name
-#SBATCH --job-name=myjob
-#################
-#a file for job output, you can check job progress
-#SBATCH --output=myjob.out
-#################
-# a file for errors from the job
-#SBATCH --error=myjob.err
-#################
-#time you think you need; default is one hour
-#in minutes in this case
-#SBATCH --time=48:00:00
-#################
-# **IMPORTANT** make sure number of nodes equals number of images
-#number of nodes you are requesting
-#SBATCH --nodes=5
-#################
-#SBATCH --mem-per-cpu=4000
-#################
-#get emailed about job BEGIN, END, and FAIL
-#SBATCH --mail-type=ALL
-#################
-#who to send email to; please change to your email
-#SBATCH  --mail-user=SUNETID@stanford.edu
-#################
-#task to run per node; each node has 16 cores
-#SBATCH --ntasks-per-node=16
-#################
+# **IMPORTANT** make sure number of nodes matches images. i.e. for 5 images:
+# #SBATCH --nodes=5
+# or
+# #PBS -l nodes=5:ppn=4
 
 
 ###############

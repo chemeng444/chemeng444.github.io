@@ -1,35 +1,3 @@
-#!/usr/bin/env /home/vossj/suncat/bin/python
-#above line selects special python interpreter needed to run espresso
-#SBATCH -p iric 
-#################
-#set a job name
-#SBATCH --job-name=myjob
-#################
-#a file for job output, you can check job progress
-#SBATCH --output=myjob.out
-#################
-# a file for errors from the job
-#SBATCH --error=myjob.err
-#################
-#time you think you need; default is one hour
-#in minutes in this case
-#SBATCH --time=20:00
-#################
-#number of nodes you are requesting
-#SBATCH --nodes=1
-#################
-#SBATCH --mem-per-cpu=4000
-#################
-#get emailed about job BEGIN, END, and FAIL
-#SBATCH --mail-type=ALL
-#################
-#who to send email to; please change to your email
-#SBATCH  --mail-user=<<<<<<<insert your sunetid>>>>>>>>>>@stanford.edu
-#################
-#task to run per node; each node has 16 cores
-#SBATCH --ntasks-per-node=16
-#################
-
 from ase import *
 from ase import io
 from ase.cluster.icosahedron import Icosahedron

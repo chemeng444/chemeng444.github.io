@@ -14,7 +14,7 @@ Please make use of [Piazza](https://piazza.com/class/ij0k0xrcxrz5pa) page for tr
 Final Report (70% - Due 3/11)
 
 1. [Project Description and Requirements](Project/)
-2. [Assignments](Project_Assignments/)
+2. [Project Assignments](Project_Assignments/)
 
 ### Getting Started ###
 

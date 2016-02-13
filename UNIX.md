@@ -9,6 +9,8 @@ permalink: /UNIX/
 2. [Basic UNIX](../UNIX/)
 3. [Python](../Python/)
 
+____
+
 ## Basic UNIX
 
 ## Contents
@@ -171,7 +173,7 @@ There are several text editors available. Popular ones include ```vim``` and ```
 <a name='submitting-jobs'></a>
 
 ## Submitting Jobs
-These instructions are specific to the Sherlock cluster.
+These instructions are specific to the **Sherlock** cluster. Instructions for the **CEES** cluster below.
 
 ```bash
 sbatch <script_file>
@@ -222,12 +224,6 @@ JOBID PARTITION     NAME     USER ST       TIME  NODES WORK_DIR
 1948506      slac /home/ct  ctsai89  R   19:57:06      1 /scratch/users/ctsai89/Class_remaining/Ag211/fbl
 1948302      slac /scratch  ctsai89  R   23:24:11      7 /scratch/users/ctsai89/TS_CH3_Au111/B_NEB
 ```
-____
-
-```bash
-qstat -f <job_ID>
-```
-Details about the job. Once the job has finished, this detail won't be available.
 
 ____
 
@@ -235,3 +231,21 @@ ____
 scancel <job_ID>
 ```
 Delete your job. You can get the job ID from ```squeue```
+
+____
+
+If you are using the **CEES** cluster, the command for submitting a job is
+
+```csh
+qsub <script_file>
+```
+
+where `<script_file>` is the name of your script (e.g. `opt.py`).
+
+```bash
+qstat
+```
+
+This will display details about the job. Once the job has finished, this detail won't be available.
+
+

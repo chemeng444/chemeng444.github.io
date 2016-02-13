@@ -4,10 +4,15 @@ mathjax: false
 permalink: /ASE/Transition_States/
 ---
 
-## ASE Tutorials    
-1. [Getting Started](../Getting_Started/)
-2. [Adsorption](../Adsorption/)
-3. [Transition States](../Transition_States/)
+# ASE Tutorials
+1. [Introduction to ASE](../)
+2. [Getting Started](../Getting_Started/)
+3. [Adsorption](../Adsorption/)
+4. [Transition States](../Transition_States/)
+
+____
+
+## <font color="red">UNDER CONSTRUCTION</font> ##
 
 ## Transition State Calculations
 
@@ -23,11 +28,22 @@ In this final tutorial, you will be calculating the transition state energy usin
 
 ## Required Files
 
-Run the following 
+Obtain the required files by running:
+
+on Sherlock:
 
 ```bash
-wget http://chemeng444.github.io/ASE/Transition_States/download_files_3.sh
-./download_files.sh
+cd $SCRATCH
+wget http://chemeng444.github.io/ASE/Getting_Started/exercise_3_sherlock.tar
+tar -xvf exercise_3_sherlock.tar
+```
+
+or on CEES:
+
+```bash
+cd ~/$USER
+wget http://chemeng444.github.io/ASE/Getting_Started/exercise_3_cees.tar
+tar -xvf exercise_3_cees.tar
 ```
 
 <a name='fixed-bond-length-calculation'></a>

@@ -18,21 +18,21 @@ metal2 = None
 
 # your OPTIMIZED lattice constant
 # for alloys, the setup will use your optimized trajectory directly
-a = 3.989	
+a = 3.989    
 
 vacuum = 7.0
 layers = 4
 if metal2:
-	bulk = io.read('../Bulk/bulk.traj')
-	if metal == 'Mo':
-		slab = surface(bulk, (1,1,0), layers, vacuum=vacuum)
-	else:
-		slab = surface(bulk, (1,1,1), layers, vacuum=vacuum)
+    bulk = io.read('../Bulk/bulk.traj')
+    if metal == 'Mo':
+        slab = surface(bulk, (1,1,0), layers, vacuum=vacuum)
+    else:
+        slab = surface(bulk, (1,1,1), layers, vacuum=vacuum)
 else:
-	if metal == 'Mo':
-		slab = bcc110(metal, a=a, size=(2,2,layers), vacuum=vacuum)
-	else:
-		slab = fcc111(metal, a=a, size=(2,2,layers), vacuum=vacuum)
+    if metal == 'Mo':
+        slab = bcc110(metal, a=a, size=(2,2,layers), vacuum=vacuum)
+    else:
+        slab = fcc111(metal, a=a, size=(2,2,layers), vacuum=vacuum)
 
 # mask for atoms with z-axis less than 10 A
 # set constraint to Fix Atoms

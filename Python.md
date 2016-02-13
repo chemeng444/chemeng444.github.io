@@ -9,6 +9,8 @@ permalink: /Python/
 2. [Basic UNIX](../UNIX/)
 3. [Python](../Python/)
 
+____
+
 ## Python Tutorial
 
 ## Contents

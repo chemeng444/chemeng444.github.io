@@ -4,10 +4,13 @@ mathjax: false
 permalink: /ASE/Getting_Started/
 ---
 
-# ASE Tutorials #
-1. [Getting Started](../Getting_Started/)
-2. [Adsorption](../Adsorption/)
-3. [Transition States](../Transition_States/)
+# ASE Tutorials
+1. [Introduction to ASE](../)
+2. [Getting Started](../Getting_Started/)
+3. [Adsorption](../Adsorption/)
+4. [Transition States](../Transition_States/)
+
+____
 
 ## Getting Started ##
 
@@ -25,12 +28,22 @@ To begin with, we will be looking at bulk metals and how to determine lattice co
 
 ### Required Files ###
 
-Obtain the required files by running
+Obtain the required files by running:
+
+on Sherlock:
 
 ```bash
-wget http://chemeng444.github.io/ASE/Getting_Started/download_files_1.sh
-chmod +x download_files_1.sh
-./download_files_1.sh
+cd $SCRATCH
+wget http://chemeng444.github.io/ASE/Getting_Started/exercise_1_sherlock.tar
+tar -xvf exercise_1_sherlock.tar
+```
+
+or on CEES:
+
+```bash
+cd ~/$USER
+wget http://chemeng444.github.io/ASE/Getting_Started/exercise_1_cees.tar
+tar -xvf exercise_1_cees.tar
 ```
 
 This should create a folder called `Exercise_1_Getting_Started/` containing subfolders with all the starter scripts you will need.
@@ -41,7 +54,7 @@ This should create a folder called `Exercise_1_Getting_Started/` containing subf
 
 ASE scripts can be run directly in the terminal (in the login node) or submitting to external nodes. Generally, you will be submitting jobs to external nodes and only small scripts will be run on the login node. By default, all output from any submitted script will be written *from the directory where the submission command was executed*, so make sure you are inside the calculation folder before running the submission command.
 
-Let's look at how a typical ASE script is written. Open the [`run_surf.py`](run_surf.py) script.
+Let's look at how a typical ASE script is written. Open the [`run_surf.py`](run_surf.py) script in the `Surface` folder. We will be showing the Sherlock versions of the script for brevity, but the CEES versions are analogous.
 
 ```bash
 vi run_surf.py
@@ -52,42 +65,55 @@ The first line,
 ```python
 #!/usr/bin/env /home/vossj/suncat/bin/python
 ```
+
 will ensure that the version of Python that is being used is the one that has all the software from SUNCAT installed.
 
-Next, notice the comments in the beginning. These lines will be ignored by Python, but will be read by the job submission system. These include information such as how much time to allocate, the number of nodes required, what the names of the output and error files are, what the name of the job should be, and what your email is. Most of the settings will be the same regardless of the job you submit. You will mostly just be changing the amount of allocated time and the number of nodes, for jobs that require parallelization.
+Next, notice the comments in the beginning. These lines will be ignored by Python, but will be read by the job submission system. These include information such as how much time to allocate, the number of nodes required, what the names of the output and error files are, what the name of the job should be, and what your email is. Most of the settings will be the same regardless of the job you submit. You will mostly just be changing the amount of allocated time and the number of nodes, for jobs that require parallelization (not required for this project).
 
 ```python
 #above line selects special python interpreter needed to run espresso
 #SBATCH -p iric 
-#################
 #set a job name
 #SBATCH --job-name=myjob
-#################
+
 #a file for job output, you can check job progress
 #SBATCH --output=myjob.out
-#################
+
 # a file for errors from the job
 #SBATCH --error=myjob.err
-#################
-#time you think you need; default is one hour
-#in minutes in this case
-#SBATCH --time=20:00
-#################
+
+#time you think you need. The max is 2880:00
+#SBATCH --time=100:00
+
 #number of nodes you are requesting
 #SBATCH --nodes=1
-#################
+
 #SBATCH --mem-per-cpu=4000
-#################
+
 #get emailed about job BEGIN, END, and FAIL
 #SBATCH --mail-type=ALL
-#################
+
 #who to send email to; please change to your email
 #SBATCH  --mail-user=SUNETID@stanford.edu
-#################
+
 #task to run per node; each node has 16 cores
 #SBATCH --ntasks-per-node=16
-#################
 ```
+
+To change the allocated time for the jobs, modify:
+
+Sherlock (HH:MM):
+
+```python
+#SBATCH --time=20:00
+```
+
+CEES (HH:MM:SS):
+
+```python
+#PBS -l walltime=20:00:00
+```
+
 
 Next, we import all the relevant ASE modules in for this calculation
 
@@ -151,6 +177,7 @@ slab.set_calculator(calc)                       #connect espresso to slab
 qn = QuasiNewton(slab, trajectory=name+'.traj') #relax slab
 qn.run(fmax=0.05)                               #until max force<=0.05 eV/AA
 ```
+
 <a name='bulk'></a>
 
 ### Bulk Metal ###
@@ -161,17 +188,34 @@ As a first example, we will be setting up a bulk fcc metal. You will typically d
 
 <a name='lattice-constant-determination'></a>
 
-### Lattice Constant Determination
-Find the [`bulk_metal.py`](bulk_metal.py) script in the `lattice` folder. This script determines the optimum lattice parameter for bulk fcc Pt using the equation of state model. **Change Pt into the metal you have been assigned for the project** and also look up a reasonable initial guess for the lattice parameter, then replace `a = `.  Submit the script by running
+#### Lattice Constant Determination ####
+
+Find the [`bulk_metal.py`](bulk_metal.py) script in the `lattice` folder. This script determines the optimum lattice parameter for bulk fcc Pt using the equation of state model. **Change Pt into the metal you have been assigned for the project** and also look up a reasonable initial guess for the lattice parameter, then replace `a = `. There's actually a table of calculated lattice parameters below, but one would typically start out with an experimentally measured value as a starting guess. For alloys, an A<sub>3</sub>B alloy will be generated.
+
+Submit the script by running (for Sherlock)
 
 ```bash
-$ sbatch --job-name=$PWD bulk_metal.py
+sbatch --job-name=$PWD bulk_metal.py
 ```
-Here, `--job-name=$PWD` sets the current working directory as the job name. This plots the energy as a function of lattice parameter and determine the lattice parameter corresponding to the minimum energy.
+Here, `--job-name=$PWD` sets the current working directory as the job name.
 
-**Requirement:** Submit the plot for the equation of state that is generated by running the script.
+and for CEES:
 
-You should see a plot looking like this:
+```bash
+qsub bulk_metal.py
+```
+
+This plots the energy as a function of lattice parameter and determine the lattice parameter corresponding to the minimum energy.
+
+To view the equation of state plot:
+
+```bash
+display Cu3Re-eos.png
+```
+
+for example, where `Cu3Re` would be replaced by the metal you are assigned.
+
+You should see a plot that looks like this:
 
 <center><img src="Images/Cu3Re-eos.png" alt="Cu3Re" style="width: 450px;"/>
 <br>Equation of state plot for a Cu<sub>3</sub>Re bulk fcc alloy</center>
@@ -184,19 +228,29 @@ Bulk modulus: 204.462225193 GPa
 (Fitted) total energy at equilibrium latt. const.: -19142.1406997 eV
 ```
 
+
+**<font color="red">Requirement:</font>** Turn in a plot for the equation of state that is generated by running the script.
+
 **Check to make sure your lattice parameters match the ones below:**
 
 <style>
 table {
-    width:35%;
+    width:100%;
 }
 table, th, td {
-    border: 1px solid black;
     border-collapse: collapse;
 }
 th, td {
     padding: 5px;
     text-align: left;
+}
+th {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+tr.last
+{
+    border-bottom: 1px solid #ddd;
 }
 table#t01 tr:nth-child(even) {
     background-color: #eee;
@@ -232,7 +286,7 @@ table#t01 th    {
 <td>3.889</td></tr>
 <tr><td>Rh</td>
 <td>3.863</td></tr>
-<tr><td>Mo (bcc)</td>
+<tr class="last"><td>Mo (bcc)</td>
 <td>3.174</td></tr>
 </table>
 </center>
@@ -243,7 +297,7 @@ table {
     width:50%;
 }
 </style>
-<center>Lattice Parameters for Alloys Metals (all fcc)
+<center>Lattice Parameters for A<sub>3</sub> Alloy Metals (all fcc)
 </center>
 <center>
 <table>
@@ -348,19 +402,33 @@ table {
 <td>PtMo</td>
 <td>3.968</td>
 </tr>
+<tr class="last">
+<td>IrRu</td>
+<td>3.860</td>
+<td>IrRe</td>
+<td>3.8750</td>
+</tr>
 </table>
 </center>
 
 <a name='convergence-with-k-points'></a>
 
-### Convergence with k-Points ###
+#### Convergence with k-Points ####
 Next, we will determine how well-converged the energy is with respect to the number of k-points in each direction. Submit the [`run_sp.py`](run_sp.py) script in the kpts folder using the lattice parameter obtained from the previous section.
 
+Sherlock:
+
 ```bash
-$ sbatch --job-name=$PWD run_sp.py
+sbatch --job-name=$PWD run_sp.py
 ```
 
-**Requirement**: Try using k = 6, 10, 14, and 18 in all three directions (i.e., k×k×k). Plot the energy as a function of k-points. Pick one and try to justify why it would be a reasonable choice. Use the optimal k-point sampling to re-run the lattice optimization script again and check if the results are consistent. The relevant k-points will usually be known, since we have consistent settings that we use throughout the group. In principle, one should always check for convergence when working with a new system.
+CEES:
+
+```bash
+qstat run_sp.py
+```
+
+**Requirement**: Try using k = 6, 10, 14, and 18 in all three directions (i.e., k×k×k). and plot the energy as a function of k-points. Pick one and try to justify why it would be a reasonable choice. Use the optimal k-point sampling to re-run the lattice optimization script (`bulk_metal.py`) again and check if the results are consistent. The relevant k-points will usually be known, since we have consistent settings that we use throughout the group. In principle, one should always check for convergence when working with a new system.
 
 <a name='surfaces'></a>
 
@@ -375,19 +443,29 @@ $ python setup_surf.py
 $ ase-gui slab.traj
 ```
 
-This will generate slab.traj and the second command opens the file with the ASE gui visualizer.
+This will generate slab.traj and the second command opens the file with the ASE gui visualizer. You should see something looking like this:
+
+<center><img src="Images/Pt-slab.png" alt="Pt111" style="width: 200px;"/>
+<img src="Images/Mo-slab.png" alt="Mo110" style="width: 200px;"/>
+<br>Pt(111) and Mo(110) slabs</center>
 
 [`run_surf.py`](run_surf.py) is a script that sets up the Quantum ESPRESSO calculator and performs the geometry optimization with respect to energy. This must be submitted to an external queue and should not be run directly in the login node. Make sure that you have run `setup_surf.py` to generate your `slab.traj` file, then submit the optimization script using:
 
 ```bash
-$ sbatch --job-id=$PWD run_surf.py
+sbatch --job-name=$PWD run_surf.py
 ```
 
-where again `--job-id=$PWD` will use the present working directory for the the SLURM (the job submission system) job name.
+in Sherlock, where again `--job-name=$PWD` will use the present working directory for the the SLURM (the job submission system) job name. Or,
+
+```bash
+qsub run_surf.py
+```
+
+in CEES.
 
 Try changing the number of k-points in the x and y-direction (i.e., k×k×1) using k = 4, 6, and 8. There are 7 Å of vacuum in the z-direction so 1 k-point is sufficient.
 
-**Requirement:** Plot the change in the total slab energy as a function of the different k-points. How many k-points are sufficient?
+**<font color="red">Requirement:</font>** Plot the change in the total slab energy as a function of the different k-points (kxkx1 where k = {4, 6, 8}). Do this by changing the keyword in the `run_surf.py` script, e.g. `kpts=(2,2,1)`. How many k-points are sufficient?
 
 <a name='clusters'></a>
 
@@ -402,19 +480,30 @@ $ python setup_cluster.py
 $ ase-gui cluster.traj
 ```
 
-Next the [`run_cluster.py`](run_cluster.py) script will perform the optimization. Read through the script and when you have made the required modifications, submit the job using
+<center><img src="Images/Au-cluster.png" alt="Au cluster" style="width: 200px;"/>
+<br>Au<sub>13</sub> cluster</center>
+
+Next the [`run_cluster.py`](run_cluster.py) script will perform the optimization. Read through the script and when you have made the required modifications, submit the job using Sherlock
 
 ```bash
-$ sbatch --job-id=$PWD run_cluster.py
+sbatch --job-name=$PWD run_cluster.py
 ```
 
-**Requirement:** Plot the change in the total slab energy as a function of different k-points. By default the 'gamma' keyword can be used when only 1 k-point is needed in all directions. Otherwise, specify all three k-points in the script.
+or for CEES
+
+```bash
+qsub run_cluster.py
+```
+
+You are able to name the output inside the script using the `name` variable. The optimized structure will be written out as `name.traj`.
+
+**<font color="red">Requirement:</font>** Plot the change in the total slab energy as a function of different k-points: 1x1x1 (`'gamma'`), 2x2x2, 4x4x4. By default the 'gamma' keyword can be used when only 1 k-point is needed. Otherwise, specify all three k-points in the script (i.e., `kpts=(2,2,2)`). Use the `run_cluster.py` script.
 
 <a name='next'></a>
 
 ### Next Steps ###
 
-**Requirement:** Before we begin calculating adsorption energies, it is important to adopt a consistent set of calculation settings for the whole class, so that adsorption energies calculated by different students can be properly compared. 
+**<font color="red">Requirement:</font>** Before we begin calculating adsorption energies, it is important to adopt a consistent set of calculation settings for the whole class, so that adsorption energies calculated by different students can be properly compared. 
 
 After you have finished the exercises above, make sure you have calculated your (111) or (110) surface at these settings:
 
@@ -427,4 +516,7 @@ And for your M<sub>13</sub>  cluster:
 
 * All atoms relaxed
 * `'gamma'` point for k-point sampling
-* 10 Å vacuum in all directions
+* 7 Å vacuum in all directions
+
+
+**Next**: move on to [Adsorption](../Adsorption/) to learn about how to calculate adsorbates on your surface.

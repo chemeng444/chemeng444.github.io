@@ -1,36 +1,3 @@
-#!/usr/bin/env /home/vossj/suncat/bin/python
-#above line selects special python interpreter needed to run espresso
-#SBATCH -p iric 
-#################
-#set a job name
-#SBATCH --job-name=myjob
-#################
-#a file for job output, you can check job progress
-#SBATCH --output=myjob.out
-#################
-# a file for errors from the job
-#SBATCH --error=myjob.err
-#################
-#time you think you need; default is one hour
-#in minutes in this case
-#SBATCH --time=20:00
-#################
-#number of nodes you are requesting
-#SBATCH --nodes=1
-#################
-#SBATCH --mem-per-cpu=4000
-#################
-#get emailed about job BEGIN, END, and FAIL
-#SBATCH --mail-type=ALL
-#################
-#who to send email to; please change to your email
-#SBATCH  --mail-user=SUNETID@stanford.edu
-#################
-#task to run per node; each node has 16 cores
-#SBATCH --ntasks-per-node=16
-#################
-
-
 import numpy as np    #vectors, matrices, lin. alg., etc.
 import matplotlib
 matplotlib.use('Agg') #turn off screen output so we can plot from the cluster
@@ -45,7 +12,7 @@ metal = 'Pt'
 metal2 = None
 
 a=3.97     #initial guess for lattice constant
-strains = np.linspace(0.97, 1.03, 7) #range for scaling of latt. consts.
+strains = np.linspace(0.87, 1.13, 10) #range for scaling of latt. consts.
                                      #[0.97..1.03] in 7 steps
 
 # if Mo then use bcc crystal, otherwise fcc

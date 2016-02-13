@@ -12,12 +12,19 @@ table {
     width:100%;
 }
 table, th, td {
-    border: 1px solid black;
     border-collapse: collapse;
 }
 th, td {
     padding: 5px;
     text-align: left;
+}
+th {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+tr.last
+{
+    border-bottom: 1px solid #ddd;
 }
 table#t01 tr:nth-child(even) {
     background-color: #eee;
@@ -134,12 +141,12 @@ table#t01 th    {
 <tr>
     <td>fhashemi</td>
     <td>Sherlock</td>
-    <td>IrAg</td>
+    <td>IrRu</td>
 </tr>
 <tr>
     <td>jasingh</td>
     <td>Sherlock</td>
-    <td>IrCu</td>
+    <td>IrRe</td>
 </tr>
 <tr>
     <td>jenniezh</td>
@@ -203,7 +210,7 @@ table#t01 th    {
 </tr>
 <tr>
     <td>mikeboyd</td>
-    <td>CEES</td>
+    <td>CEES/Sherlock</td>
     <td>Ru</td>
 </tr>
 <tr>
@@ -251,7 +258,7 @@ table#t01 th    {
     <td>Sherlock</td>
     <td>PtRh</td>
 </tr>
-<tr>
+<tr class="last">
     <td>vvmiller</td>
     <td>Sherlock</td>
     <td>CuPd</td>

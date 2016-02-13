@@ -1,47 +1,19 @@
-#!/usr/bin/env /home/vossj/suncat/bin/python
-#above line selects special python interpreter needed to run espresso
-#SBATCH -p iric 
-#################
-#set a job name
-#you can also use --job-name=$PWD when submitting
-#SBATCH --job-name=myjob
-#################
-#a file for job output, you can check job progress
-#SBATCH --output=myjob.out
-#################
-# a file for errors from the job
-#SBATCH --error=myjob.err
-#################
-#time you think you need; default is 20 hours
-#SBATCH --time=20:00:00
-#################
-#number of nodes you are requesting
-#SBATCH --nodes=1
-#################
-#SBATCH --mem-per-cpu=4000
-#################
-#get emailed about job BEGIN, END, and FAIL
-#SBATCH --mail-type=ALL
-#################
-#who to send email to; please change to your email
-#SBATCH  --mail-user=SUNETID@stanford.edu
-#################
-#task to run per node; each node has 16 cores
-#SBATCH --ntasks-per-node=16
-#################
-
-from ase.constraints import *
 from ase import *
+from ase.constraints import *
+from ase.dft.bee import BEEF_Ensemble
 from ase.io import read
 from ase.optimize import QuasiNewton
 from espresso import espresso
-from ase.dft.bee import BEEF_Ensemble
 import cPickle as pickle
 
 # read in trajectory file
 # it can be the clean surface or
 # with atoms adsorbed
 atoms = read('surface.traj')
+
+# for slabs, specify height below where atoms are fixed (bottom two layers)
+# for clusters, set this to 0.0
+z_height = 10.0 
 
 #set up espresso calculator with 20 extra bands
 #and 4x4x1 k-point sampling
@@ -69,7 +41,7 @@ calc = espresso(pw=500,             #plane-wave cutoff
 # if you used the generic scripts for 
 # setting up the surfaces, double check to make sure
 # the bottom two layers are fixed
-mask = [atom.z<10.0 for atom in atoms]
+mask = [atom.z<z_height for atom in atoms]
 fixatoms = FixAtoms(mask=mask)
 atoms.set_constraint(fixatoms)
 

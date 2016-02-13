@@ -1,41 +1,10 @@
-#!/usr/bin/env /home/vossj/suncat/bin/python
-#above line selects special python interpreter needed to run espresso
-#SBATCH -p iric
-#################
-#set a job name
-#SBATCH --job-name=myjob
-#################
-#a file for job output, you can check job progress
-#SBATCH --output=myjob.out
-#################
-# a file for errors from the job
-#SBATCH --error=myjob.err
-#################
-#time you think you need; default is one hour
-#in minutes in this case
-#SBATCH --time=20:00
-#################
-#number of nodes you are requesting
-#SBATCH --nodes=1
-#################
-#SBATCH --mem-per-cpu=4000
-#################
-#get emailed about job BEGIN, END, and FAIL
-#SBATCH --mail-type=ALL
-#################
-#who to send email to; please change to your email
-#SBATCH  --mail-user=SUNETID@stanford.edu
-#################
-#task to run per node; each node has 16 cores
-#SBATCH --ntasks-per-node=16
-#################
-
 from ase import *
 from espresso import espresso
 from ase.lattice import bulk
 import matplotlib
 matplotlib.use('Agg') #turn off screen output so we can plot from the cluster
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 metal = 'Pt'
@@ -93,4 +62,7 @@ for k in kpts:
 fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.plot(kpts, energies)
+ax.set_xlabel('k-points')
+ax.set_ylabel('Total energy')
+plt.tight_layout()
 fig.savefig('kpts_vs_sp_energies.png')
