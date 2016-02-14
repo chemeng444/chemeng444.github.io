@@ -11,10 +11,12 @@ do
 		cat ../../Scripts/$cluster$header $script >> $name/$script
 	done
 	chmod +x $name/*py
+	
 	mkdir $name/Bulk $name/Cluster $name/Surface
 	mv $name/bulk_metal.py $name/run_sp.py $name/Bulk
 	mv $name/setup_surf.py $name/run_surf.py $name/Surface
 	mv $name/setup_cluster.py $name/run_cluster.py $name/Cluster
+	
 	tar -cvf exercise_1_$cluster.tar $name
 	rm -r $name
 done

@@ -5,6 +5,9 @@ do
     ./make_zips.sh
     cd ../
 done
+cd ../Scripts
+./make_zips.sh
+cd ../
 git add *
 git commit -m "udpated scripts"
 git push

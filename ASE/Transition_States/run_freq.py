@@ -1,9 +1,9 @@
-from ase.io import read
 from ase.constraints import FixAtoms
+from ase.io import read
+from ase.thermochemistry import HarmonicThermo
 from ase.vibrations import Vibrations
 from espresso import espresso
 from espresso.vibespresso import vibespresso
-from ase.thermochemistry import HarmonicThermo
 
 #############
 ## more information here: https://wiki.fysik.dtu.dk/ase/ase/thermochemistry/thermochemistry.html
@@ -31,34 +31,33 @@ calc = espresso(pw = 500,
 
 # special calculator for the vibration calculations
 calcvib = vibespresso(pw = 500,
-                dw = 5000,
-                kpts = (4, 4, 1), 
-                nbands = -20,
-                xc = 'BEEF-vdW', 
-                convergence = {'energy':1e-5,
-                               'mixing':0.1,
-                               'nmix':10,
-                               'maxsteps':500,
-                               'diag':'david'
-                                },
-                spinpol = False,
-                outdirprefix = 'vibdir',
-                )  	      	      	      	   # log file                                         
+                      dw = 5000,
+                      kpts = (4, 4, 1), 
+                      nbands = -20,
+                      xc = 'BEEF-vdW', 
+                      convergence = {'energy':1e-5,
+                                     'mixing':0.1,
+                                     'nmix':10,
+                                     'maxsteps':500,
+                                     'diag':'david'
+                                      },
+                      spinpol = False,
+                      outdirprefix = 'vibdir',
+                      )
 
-atoms.set_calculator(calc)    	      	      	      	   # attach calculator to the atoms                   
+atoms.set_calculator(calc)                            # attach calculator to the atoms                   
 
-energy = atoms.get_potential_energy()                      # caclulate the energy, to be used to determine G
+energy = atoms.get_potential_energy()                 # caclulate the energy, to be used to determine G
 
 # CHANGE TO THE ATOMS YOU NEED TO VIBRATE
 # metal atoms can be assumed to be fixed
-vibrateatoms=[12,13,14]	      	      	      	      	   # calculate the vibration modes of atoms #12 and #13
-                                                           # change it to the atoms on your surface
-atoms.set_calculator(calcvib)    	      	      	         # attach vibrations calculator to the atoms                   
+vibrateatoms=[atom.index for atom in atoms if atom.symbol in ['H','N']]   # calculate the vibrational modes for all N and H atoms
+atoms.set_calculator(calcvib)                                             # attach vibrations calculator to the atoms                   
 
 # Calculate vibrations                                                                                        
 vib = Vibrations(atoms,indices=vibrateatoms,delta=0.03)    # define a vibration calculation                   
-vib.run()     	      	      	      	      	      	   # run the vibration calculation                    
-vib.summary(method='standard')	      	      	      	   # summarize the calculated results                 
+vib.run()                                                  # run the vibration calculation                    
+vib.summary(method='standard')                             # summarize the calculated results                 
 
 for mode in range(len(vibrateatoms)*3):                    # Make trajectory files to visualize the modes.    
     vib.write_mode(mode)

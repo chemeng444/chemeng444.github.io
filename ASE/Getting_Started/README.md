@@ -9,12 +9,13 @@ permalink: /ASE/Getting_Started/
 2. [Getting Started](../Getting_Started/)
 3. [Adsorption](../Adsorption/)
 4. [Transition States](../Transition_States/)
+5. [Error Estimation and Density of States](../BEEF_DOS/)
 
 ____
 
 ## Getting Started ##
 
-To begin with, we will be looking at bulk metals and how to determine lattice constants, then we will be setting up metal surfaces. We will be using Pt throughout.
+In the first exercise, we will be looking at bulk metals and how to determine lattice constants, then we will be setting up metal surfaces and metal clusters. The example scripts use Pt by default. You should change this to the system you have been assigned for the project so you can start making progress.
 
 ## Contents ##
 
@@ -24,7 +25,8 @@ To begin with, we will be looking at bulk metals and how to determine lattice co
   2. [Convergence with k-Points](#convergence-with-k-points)
 3. [Setting up Surfaces](#surfaces)
 4. [Setting up Clusters](#clusters)
-5. [Next Steps](#next)
+5. [Restarting Calculations](#restarting)
+6. [Next Steps](#next)
 
 ### Required Files ###
 
@@ -46,7 +48,7 @@ wget http://chemeng444.github.io/ASE/Getting_Started/exercise_1_cees.tar
 tar -xvf exercise_1_cees.tar
 ```
 
-This should create a folder called `Exercise_1_Getting_Started/` containing subfolders with all the starter scripts you will need.
+This should create a folder called `Exercise_1_Getting_Started/` containing subfolders with all the starter scripts you will need. By default, The output for your calculations will be written into the folder from where you submitted the script. To perform new calculations, you will generally be copying the scripts from these tutorials into new folders, modifying them, and submitting them.
 
 <a name='a-typical-ase-script'></a>
 
@@ -102,10 +104,10 @@ Next, notice the comments in the beginning. These lines will be ignored by Pytho
 
 To change the allocated time for the jobs, modify:
 
-Sherlock (HH:MM):
+Sherlock (MM:SS):
 
 ```python
-#SBATCH --time=20:00
+#SBATCH --time=1200:00
 ```
 
 CEES (HH:MM:SS):
@@ -134,10 +136,11 @@ name = 'Pt111'
 ```
 which we can easily modify and use for naming output files.
 
-The `fcc111` method sets up a FCC 111 surface and returns an [Atoms](https://wiki.fysik.dtu.dk/ase/ase/atoms.html) object containing the surface. 
+An existing trajectory can be read in:
 
 ```python
-slab = fcc111('Pt', a=a, size=(2,2,3), vacuum=7.0)    #function for setting up a fcc(111) surface
+# read in the slab
+slab = io.read('slab.traj')
 ```
 
 
@@ -164,19 +167,49 @@ calc = espresso(pw=500,           #plane-wave cutoff
 Then, atomic constraints are set. Since there are only a finite number of layers in the slab, the lowest layers are fixed to emulate the bulk. 
 
 ```python
-mask = [atom.z < 10 for atom in atoms]  #atoms in the structure to be fixed
+mask = [atom.z < 10 for atom in slab]  #atoms in the structure to be fixed
 fixatoms = FixAtoms(mask=mask)
 slab.set_constraint(fixatoms)           #fix everything but the top layer atoms
 slab.rattle()                           #define random displacements to the atomic positions before optimization
 ```
 
-Finally, the Quantum ESPRESSO calculator is attached to the `slab` Atoms object, and the optimizer is defined. `QuasiNewton()` is an object for the [structural optimization](https://wiki.fysik.dtu.dk/ase/ase/optimize.html), which takes an Atoms object as an input. A convergence criteria is set and `qn.run()` initiates the optimization.
+Finally, the Quantum ESPRESSO calculator is attached to the `slab` Atoms object, and the optimizer is defined. 
+
+To perform structural optimizations, an optimizer needs to be defined. We will be using the BFGS Line Search, which is implemented in `QuasiNewton`. For more details about optimizations in ASE, look at [this page](https://wiki.fysik.dtu.dk/ase/ase/optimize.html). `QuasiNewton()` is an object for the [structural optimization](https://wiki.fysik.dtu.dk/ase/ase/optimize.html), which takes an Atoms object as an input. A convergence criteria is set and `qn.run()` initiates the optimization.
 
 ```python
 slab.set_calculator(calc)                       #connect espresso to slab
-qn = QuasiNewton(slab, trajectory=name+'.traj') #relax slab
+qn = QuasiNewton(slab, trajectory=name+'.traj', logfile=name+'.log') #relax slab
 qn.run(fmax=0.05)                               #until max force<=0.05 eV/AA
 ```
+
+The `logfile=` argument is optional. If it's not specified, then the output will be written to the system output, e.g. `myjob.out`. You should see the following results:
+
+```bash
+BFGSLineSearch:   0[  0]  12:50:46   -28144.460970       1.7496
+BFGSLineSearch:   1[  1]  12:59:45   -28145.528706       0.4792
+BFGSLineSearch:   2[  2]  13:07:35   -28145.571393       0.3625
+BFGSLineSearch:   3[  3]  13:14:49   -28145.600615       0.1408
+BFGSLineSearch:   4[  4]  13:21:30   -28145.608312       0.0994
+BFGSLineSearch:   5[  5]  13:27:02   -28145.610934       0.0540
+BFGSLineSearch:   6[  6]  13:31:28   -28145.611948       0.0245
+```
+
+The column names for the results are:
+
+```bash
+optimizer         step    time       total energy (eV)   forces (eV/Å)
+```
+
+The trajectory for all optimization steps are stored in `name+'.traj'`, so if `name='output'`, then it will be stored in `output.traj`. You can read the output trajectory using `ase-gui output.traj` and view all steps. The final energy is also stored in the `.traj` file and can be retrieved by reading in the `.traj` file. Using Python in interactive mode (i.e., by running `python`):
+
+```python
+>>> from ase.io import read
+>>> atoms = read('output.traj')
+>>> atoms.get_potential_energy()
+-28436.147150825487
+```
+
 
 <a name='bulk'></a>
 
@@ -242,7 +275,7 @@ table, th, td {
 }
 th, td {
     padding: 5px;
-    text-align: left;
+    text-align: center;
 }
 th {
     border-top: 1px solid #ddd;
@@ -297,7 +330,7 @@ table {
     width:50%;
 }
 </style>
-<center>Lattice Parameters for A<sub>3</sub> Alloy Metals (all fcc)
+<center>Lattice Parameters for A<sub>3</sub>B Alloy Metals (all fcc)
 </center>
 <center>
 <table>
@@ -425,7 +458,7 @@ sbatch --job-name=$PWD run_sp.py
 CEES:
 
 ```bash
-qstat run_sp.py
+qsub run_sp.py
 ```
 
 **Requirement**: Try using k = 6, 10, 14, and 18 in all three directions (i.e., k×k×k). and plot the energy as a function of k-points. Pick one and try to justify why it would be a reasonable choice. Use the optimal k-point sampling to re-run the lattice optimization script (`bulk_metal.py`) again and check if the results are consistent. The relevant k-points will usually be known, since we have consistent settings that we use throughout the group. In principle, one should always check for convergence when working with a new system.
@@ -445,8 +478,8 @@ $ ase-gui slab.traj
 
 This will generate slab.traj and the second command opens the file with the ASE gui visualizer. You should see something looking like this:
 
-<center><img src="Images/Pt-slab.png" alt="Pt111" style="width: 200px;"/>
-<img src="Images/Mo-slab.png" alt="Mo110" style="width: 200px;"/>
+<center><img src="Images/Pt-slab.png" alt="Pt111" style="width: 250px;"/>
+<img src="Images/Mo-slab.png" alt="Mo110" style="width: 250px;"/>
 <br>Pt(111) and Mo(110) slabs</center>
 
 [`run_surf.py`](run_surf.py) is a script that sets up the Quantum ESPRESSO calculator and performs the geometry optimization with respect to energy. This must be submitted to an external queue and should not be run directly in the login node. Make sure that you have run `setup_surf.py` to generate your `slab.traj` file, then submit the optimization script using:
@@ -473,17 +506,19 @@ Try changing the number of k-points in the x and y-direction (i.e., k×k×1) usi
 
 Head into the `Exercise_1_Getting_Started/Cluster/` folder.
 
-Next we will use the `ase.cluster.icosahedron` module to set up metal clusters. The [`setup_cluster.py`](setup_cluster.py) script demonstrates how to set up a 13 atom metallic cluster. **Change Pt into the metal or alloy you have been assigned**. This can be run within the login node using
+Next we will use the `ase.cluster.octahedron` module to set up metal clusters. This will create M<sub>13</sub> clusters with 4 fold and 3 fold coordination. The [`setup_cluster.py`](setup_cluster.py) script demonstrates how to set up the 13 atom metallic cluster. **Change Pt into the metal or alloy you have been assigned**. This can be run within the login node using
 
 ```bash
 $ python setup_cluster.py
 $ ase-gui cluster.traj
 ```
 
-<center><img src="Images/Au-cluster.png" alt="Au cluster" style="width: 200px;"/>
+<center><img src="Images/Au-cluster.png" alt="Au cluster" style="width: 300px;"/>
 <br>Au<sub>13</sub> cluster</center>
 
-Next the [`run_cluster.py`](run_cluster.py) script will perform the optimization. Read through the script and when you have made the required modifications, submit the job using Sherlock
+Next the [`run_cluster.py`](run_cluster.py) script will perform the optimization. **Note that you will probably need to allocate 10-20 hours for this calculation to finish.** Don't be alarmed if it is taking longer than all the other calculations. If you didn't allocate enough time, you can always [restart the calculation](#restarting) from where you left off. 
+
+Read through the script and when you have made the required modifications, submit the job using Sherlock
 
 ```bash
 sbatch --job-name=$PWD run_cluster.py
@@ -497,15 +532,39 @@ qsub run_cluster.py
 
 You are able to name the output inside the script using the `name` variable. The optimized structure will be written out as `name.traj`.
 
-**<font color="red">Requirement:</font>** Plot the change in the total slab energy as a function of different k-points: 1x1x1 (`'gamma'`), 2x2x2, 4x4x4. By default the 'gamma' keyword can be used when only 1 k-point is needed. Otherwise, specify all three k-points in the script (i.e., `kpts=(2,2,2)`). Use the `run_cluster.py` script.
+**<font color="red">Requirement:</font>** Plot the change in the total slab energy as a function of different k-points: 1x1x1 (`'gamma'`), 2x2x2, 4x4x4. By default the 'gamma' keyword can be used when only 1 k-point is needed. Otherwise, specify all three k-points in the script (i.e., `kpts=(2,2,2)`). Use the `run_cluster.py` script. To save time, **use the optimized results** from your initial calculation with `gamma` as the input for the k = 2, 4 calculations. See [Restarting Calculations](#restarting).
+
+*Update (2015/02/15):* If you are working with an alloy, it is possible that you will see large structural rearrangements when you are optimizing. You are only required to use the result you get from the `gamma` for the project, but you may wish to explore other possible geometries for the cluster that might be lower in energy. In the `setup_cluster.py` script, simply uncomment the line
+
+```python
+#atoms = Icosahedron(element1, noshells=2)
+```
+
+to setup an icosahedron cluster. This geometry has at most three-fold coordination for adsorbates instead of four-fold in the cuboctahedral geometry.
+
+
+
+<a name='restarting'></a>
+
+### Restarting Calculations ###
+
+In case you didn't specify a long enough wall-time, the calculation can be continued by using your current output. Simply use the `ase-gui` command, which has a command-line feature for combining trajectory files.
+
+```bash
+ase-gui input.traj output.traj -o input.traj
+```
+
+this command combines `input.traj` and `output.traj` and writes it out to `input.traj`. This way, the `input.traj` will now include all trajectory images. You can then re-run the script without changing the filename to be read in.
+
+
 
 <a name='next'></a>
 
 ### Next Steps ###
 
-**<font color="red">Requirement:</font>** Before we begin calculating adsorption energies, it is important to adopt a consistent set of calculation settings for the whole class, so that adsorption energies calculated by different students can be properly compared. 
+**<font color="red">Requirement:</font>** Before we begin calculating adsorption energies, it is important to adopt a consistent set of calculation settings for the whole class. This is so that the results are calculated at the same level of accuracy and can be properly compared. 
 
-After you have finished the exercises above, make sure you have calculated your (111) or (110) surface at these settings:
+After you have finished the exercises above, make sure you have calculated your (111) (or (110) if you were assigned Mo) surface at these settings:
 
 * (2×2×4) unit cell
 * 4 layers, top 2 layers relaxed, bottom 2 layers fixed

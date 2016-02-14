@@ -27,5 +27,5 @@ calc = espresso(pw=500,           #plane-wave cutoff
                 outdir='calcdir') #output directory for Quantum Espresso files
 
 atoms.set_calculator(calc)                       #connect espresso to cluster
-qn = QuasiNewton(atoms, trajectory=name+'.traj') #relax atoms
+qn = QuasiNewton(atoms, trajectory=name+'.traj', logfile=name+'.log') #relax atoms
 qn.run(fmax=0.05)                               #until max force<=0.05 eV/AA

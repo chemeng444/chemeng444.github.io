@@ -39,5 +39,5 @@ slab.set_constraint(fixatoms)               # fix everything but the top layer a
 slab.rattle()                               # define random displacements to the atomic positions before optimization
 
 slab.set_calculator(calc)                       #connect espresso to slab
-qn = QuasiNewton(slab, trajectory=name+'.traj') #relax slab
+qn = QuasiNewton(slab, trajectory=name+'.traj', logfile=name+'.log') #relax slab
 qn.run(fmax=0.05)                               #until max force<=0.05 eV/AA

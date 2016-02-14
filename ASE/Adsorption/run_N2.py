@@ -1,41 +1,45 @@
 import cPickle as pickle
+
 from ase import *
 from ase import io
+from ase.dft.bee import BEEF_Ensemble
+from ase.optimize import QuasiNewton
 from ase.structure import molecule
 from ase.vibrations import Vibrations
-from ase.optimize import QuasiNewton
-from ase.dft.bee import BEEF_Ensemble
 from ase.thermochemistry import IdealGasThermo
 from espresso import espresso
 from espresso.vibespresso import vibespresso
 
 name = 'N2'
-atoms = molecule('N2')
 
-calc = espresso(pw=500,	        #plane-wave cutoff
-                dw=5000,		#density cutoff
+# load N2 molecule and add 20.0 AA vacuum
+atoms = molecule('N2')
+atoms.center(20.0)
+
+calc = espresso(pw=500,         #plane-wave cutoff
+                dw=5000,        #density cutoff
                 xc='BEEF-vdW',  #exchange-correlation functional
                 kpts=(1,1,1),   #k-point sampling
-                nbands=-10,	    #10 extra bands besides the bands needed to hold
-                				#the valence electrons
+                nbands=-10,     #10 extra bands besides the bands needed to hold
+                                #the valence electrons
                 sigma=0.1,
                 psppath='/home/vossj/suncat/psp/gbrv1.5pbe',    #pseudopotential
                 convergence= {'energy':1e-5,
-					               'mixing':0.1,
-					               'nmix':10,
-					               'mix':4,
-					               'maxsteps':500,
-					               'diag':'david'
-					                },	#convergence parameters
+                                   'mixing':0.1,
+                                   'nmix':10,
+                                   'mix':4,
+                                   'maxsteps':500,
+                                   'diag':'david'
+                                    },    #convergence parameters
                 beefensemble = True,
                 printensemble = True,
-                outdir='calcdir')	#output directory for Quantum Espresso files
+                outdir='calcdir')    #output directory for Quantum Espresso files
 
 atoms.set_calculator(calc)
 
 vibrateatoms = [atom.index for atom in atoms]
 
-dyn = QuasiNewton(atoms, logfile= 'N2.log', trajectory='N2.traj')
+dyn = QuasiNewton(atoms, logfile= name+'.log', trajectory=name+'.traj')
 dyn.run(fmax=0.05)
 
 energy = atoms.get_potential_energy()
@@ -43,22 +47,22 @@ energy = atoms.get_potential_energy()
 calc.stop()
 
 # Calculate vibrations
-calcvib = vibespresso(pw=500,	#plane-wave cutoff
-                dw=5000,		#density cutoff
-                xc='BEEF-vdW',		#exchange-correlation functional
-                kpts=(1,1,1), #k-point sampling
-                nbands=-10,	#10 extra bands besides the bands needed to hold
-                					#the valence electrons
-                sigma=0.1,
-                psppath='/home/vossj/suncat/psp/gbrv1.5pbe',    #pseudopotential
-                convergence= {'energy':1e-5,
-					               'mixing':0.1,
-					               'nmix':10,
-					               'mix':4,
-					               'maxsteps':500,
-					               'diag':'david'
-					                },	#convergence parameters
-                outdirprefix='calcdirv')	#output directory for Quantum Espresso files
+calcvib = vibespresso(pw=500,           #plane-wave cutoff
+                      dw=5000,          #density cutoff
+                      xc='BEEF-vdW',    #exchange-correlation functional
+                      kpts=(1,1,1),     #k-point sampling
+                      nbands=-10,       #10 extra bands besides the bands needed to hold
+                                        #the valence electrons
+                      sigma=0.1,
+                      psppath='/home/vossj/suncat/psp/gbrv1.5pbe',    #pseudopotential
+                      convergence= {'energy':1e-5,
+                                    'mixing':0.1,
+                                    'nmix':10,
+                                    'mix':4,
+                                    'maxsteps':500,
+                                    'diag':'david'
+                                    },    #convergence parameters
+                      outdirprefix='calcdirv')    #output directory for Quantum Espresso files
 
 atoms.set_calculator(calcvib)
 
@@ -83,7 +87,7 @@ thermo = IdealGasThermo(vib_energies=vib_energies,
 # change for your operating conditions
 freeenergy = thermo.get_gibbs_energy(temperature=300,pressure=101325)
 
-f=open('N2.energy','w')
+f=open(name+'.energy','w')
 f.write('Potential energy: '+str(energy)+'\n'+'Free energy: '+str(freeenergy)+'\n')
 f.close
 

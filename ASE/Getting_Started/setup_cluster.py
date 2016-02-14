@@ -9,7 +9,7 @@ from ase import Atoms
 # if your assigned system is a binary alloy, specify element2 (e.g. 'Cu')
 element1 = 'Pt'
 element2 = None		# change to 'Cu' for example if you have an alloy
-a = None
+a = None            # optionally specify a lattice parameter
 vacuum = 7.0
 
 # create the cluster and add vacuum around the cluster

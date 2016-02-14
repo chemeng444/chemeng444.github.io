@@ -3,8 +3,7 @@ import cPickle as pickle
 
 from ase import *
 from ase import io
-from ase.constraints import FixBondLength
-from ase.constraints import FixAtoms
+from ase.constraints import FixAtoms, FixBondLength
 from ase.dft.bee import BEEF_Ensemble
 from ase.optimize import QuasiNewton
 from espresso import espresso
@@ -18,14 +17,18 @@ atoms = io.read('surface.traj')
 # MAKE SURE YOU HAVE CHOSEN THE RIGHT ATOMS BEFORE SUBMITTING
 # don't wait until it has finished running to find out you fixed
 # the wrong atoms
+
 atom1=12
 atom2=13
 
+threshold=0.4    # threshold bond-length for terminating the FBL calculation
+
 # apply all constraints
-# if you used mask from above to fix layers, uncomment the second one
 constraints = [FixBondLength(atom1,atom2)]
+
 mask = [atom.z < 10 for atom in atoms]      # atoms in the structure to be fixed
-constraints.append(FixAtoms(mask=mask))
+constraints.append(FixAtoms(mask=mask))     # this is NOT needed for the M13 cluster!!
+
 atoms.set_constraint(constraints)
 
 
@@ -67,6 +70,9 @@ numsteps = 40
 # for loop that changes the distance between the atoms, fixes it, and performs
 # a structural optimization. results writen out as i*.traj files
 for step, delta in enumerate(xrange(0,30,1)):
+    if atoms.get_distance(atoms1, atoms2) < threshold:
+        break
+
     if step < numsteps:
         atoms.set_distance(atom1, atom2, d, fix=0.5)
 

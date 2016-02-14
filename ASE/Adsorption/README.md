@@ -9,6 +9,7 @@ permalink: /ASE/Adsorption/
 2. [Getting Started](../Getting_Started/)
 3. [Adsorption](../Adsorption/)
 4. [Transition States](../Transition_States/)
+5. [Error Estimation and Density of States](../BEEF_DOS/)
 
 ____
 
@@ -17,8 +18,8 @@ ____
 In the second exercise, you will be calculating the dissociative adsorption of N<sub>2</sub> onto the your cluster and (111) surface. This will set you up for calculating the transition state in the third exercise. We will also calculate all the intermediates in the ammonia synthesis pathway (N\*, NH\*, NH<sub>2</sub>\*, NH<sub>3</sub>\*, H\*)
 
 ## Contents
-1. [Gaseous molecules](#gaseous-molecules)
-2. [Adsorption sites](#adsorption-sites)
+1. [Gaseous Molecules](#gaseous-molecules)
+2. [Adsorption Sites](#adsorption-sites)
 3. [Remaining Reaction Intermediates](#reaction-intermediates)
 
 ### Required Files ###
@@ -45,7 +46,7 @@ This will create a folder called `Exercise_2_Adsorption`.
 
 <a name='gaseous-molecules'></a>
 
-### Gaseous molecules ###
+### Gaseous Molecules ###
 
 In this exercise you will be calculating the dissociative adsorption of N<sub>2</sub> on your extended surface and your M<sub>13</sub> surface from the [previous exercise](../Getting_Started/). The dissociative adsorption energy is defined as:
 <div>
@@ -58,13 +59,15 @@ $$
 
 where N\* refers to adsorbed N. We have *E*<sub>surface</sub> from the previous exercise, so we will need to calculate both *E*<sub>surface + 2N\*</sub> and *E*<sub>N<sub>2</sub></sub> in this exercise.
 
-In the `N2_gas` subfolder, find the [`run_N2.py`](run_N2.py) script. This is a typical script for calculating gas phase species: the optimized geometry is determined, then the electronic energy, as well as the vibrational modes are computed and used to determine the free energy. Run the script and check that the vibrational modes are reasonable.
+In the `N2_gas` subfolder, find the [`run_N2.py`](run_N2.py) script. This is a typical script for calculating gas phase species: the optimized geometry is determined, then the electronic energy, as well as the vibrational modes are computed and used to determine the free energy. Run the script and check that the vibrational modes are reasonable. Ideally, one large vibrational frequency corresponding to the N-N stretching should be observed.
 
 
 
 <a name='adsorption-sites'></a>
 
-### Adsorption sites ###
+### Adsorption Sites ###
+
+Take a look [here](http://chemeng444.github.io/ASE/#ase-gui) if you need a reminder on how to add atoms using `ase-gui`. We will describe how to add atoms within the ASE script below.
 
 Enter the `Adsorption` subfolder.
 
@@ -136,6 +139,8 @@ table#t01 th    {
 </table>
 </center>
 
+If you are working with an alloy system, it is possible that the structure has distorted significantly. In that case, just identify the unique adsorption sites for your system.
+
 In the [`setup_ads.py`](setup_ads.py) script, an optimized structure is read, and then the adsorbate atoms are added manually. This script can be executed in the login node using `python setup_ads.py`. The `add_adsorbate()` function is used to add adsorbates:
 
 ```python
@@ -183,11 +188,13 @@ Organize your directories in the following way:
 
 Once you have all your structures set up, it is time to run the structural optimization. The `opt.py` script should be submitted within each subdirectory **for each** adsorption site. This way the output files will be written to their respective subdirectories. 
 
+**Note:** You will need to explore all possible adsorption sites to find the ones with the lowest energy, as those will be the most stable configurations. For the 2N\* calculation, you will need to focus on neighboring sites. However, what constitutes a "neighboring" site might depend on your system. You might find that when the two N\* atoms are close to each other, that they combine to form an adsorbed N<sub>2</sub>\* during the optimization. This just means that your surface may be so reactive that it can stabilize the N<sub>2</sub> molecule without relying on the N-N bond being broken. In that case you will have to look for sites slightly further apart.
+
 **<font color="red">Requirement:</font>** 
 Complete structural optimizations for the following adsorbates:
 
 * Calculate 2N\* adsorption on all possible sites on the M<sub>13</sub> cluster **and** the extended surface.
 * Calculate the reaction intermediates (from N\* through NH3\*) on all possible adsorption sites **only** for the M<sub>13</sub> cluster.
-
+* There may be a lot of possible configurations, so we recommend that you set up *all* possible ones and submit them at the same time.
 
 **Next**: move on to [Transition States](../Transition_States/) to learn about how to determine transition states and barriers.

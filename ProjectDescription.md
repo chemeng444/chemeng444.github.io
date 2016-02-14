@@ -66,10 +66,10 @@ mkdir $SCRATCH/CHE444Project/
 for CEES:
 
 ```bash
-mkdir /data/cees/$SUNETID/CHE444Project
+mkdir /data/cees/$USER/CHE444Project
 ```
 
-You may run the exercises in any directory, but keep all the final files for the project organized in the following structure:
+You may run the exercises in any directory (as long as it is under `$SCRATCH` for Sherlock and `/data/cees/$USER` for CEES), but keep all the final files for the project organized in the following structure:
 
 ```bash
 ../CHE444Project/Adsorption/
@@ -93,6 +93,8 @@ In summary:
 3. **For both M<sub>13</sub> cluster and metal surface**: Fixed bond length (FBL) calculation for the activation barrier for N<sub>2</sub> → 2N\*. You will need to perform an adsorption energy calculation for 2N\*, which will serve as the starting point for the FBL. [Project Part 3](../ASE/Transition_States)
 4. Vibrational analysis for the transition state **and** the adsorbed states. Calculation of the reaction rate and also a free energy diagram with some temperature and pressure dependence. [Project Part 3](../ASE/Transition_States)
 
+Once you have finished the required calculations, you are free to explore other features of the reaction as you see fit.
+
 **IMPORTANT:**
 
 When you have finished all your calculations. Run the following to copy all your files into the shared course directory, so your classmates may access the results:
@@ -112,7 +114,7 @@ Your analysis should include the following:
 * Comparison between the (111) surface and the M<sub>13</sub> cluster
 * Analysis of rate as a function of the temperature
 
-In addition, you may wish to address the following questions:
+Beyond these points, you may discuss anything you find interesting. Here are some ideas:
 
 * Do the reaction intermediates (adsorbates) show the same dependence on surface site or surface termination?
 * What are other factors that can affect adsorbate-metal interaction?

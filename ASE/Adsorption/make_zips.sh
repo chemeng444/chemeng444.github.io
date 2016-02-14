@@ -14,6 +14,7 @@ do
 	mkdir $name/Adsorbates $name/N2_gas 
 	mv $name/opt.py $name/setup_ads.py $name/Adsorbates
 	mv $name/run_N2.py $name/N2_gas
+	
 	tar -cvf exercise_2_$cluster.tar $name
 	rm -r $name
 done

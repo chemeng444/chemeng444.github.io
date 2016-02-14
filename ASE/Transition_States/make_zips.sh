@@ -11,6 +11,12 @@ do
 		cat ../../Scripts/$cluster$header $script >> $name/$script
 	done
 	chmod +x $name/*py
+	
+	mkdir $name/NEB $name/FBL $name/Vibrations
+	mv $name/neb*py $name/NEB
+	mv $name/fbl.py $name/FBL
+	mv $name/run_freq.py $name/get_gas_free_energy.py $name/get_ads_free_energy.py $name/Vibrations
+
 	tar -cvf exercise_3_$cluster.tar $name
 	rm -r $name
 done

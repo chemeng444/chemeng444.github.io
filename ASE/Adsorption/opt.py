@@ -12,8 +12,14 @@ import cPickle as pickle
 atoms = read('surface.traj')
 
 # for slabs, specify height below where atoms are fixed (bottom two layers)
-# for clusters, set this to 0.0
+# for clusters, comment out everything from this line until `atoms.set_constraint(fixatoms)`
 z_height = 10.0 
+
+# set constraints. these should already be in place
+# if you set this previously in exercise 1
+mask = [atom.z<z_height for atom in atoms]
+fixatoms = FixAtoms(mask=mask)
+atoms.set_constraint(fixatoms)
 
 #set up espresso calculator with 20 extra bands
 #and 4x4x1 k-point sampling
@@ -36,14 +42,6 @@ calc = espresso(pw=500,             #plane-wave cutoff
                 beefensemble = True,
                 printensemble =True,
                 outdir='calcdir')    #output directory for Quantum Espresso files
-
-# set constraints. these should already be in place
-# if you used the generic scripts for 
-# setting up the surfaces, double check to make sure
-# the bottom two layers are fixed
-mask = [atom.z<z_height for atom in atoms]
-fixatoms = FixAtoms(mask=mask)
-atoms.set_constraint(fixatoms)
 
 # attach the espresso calculator to the surface
 atoms.set_calculator(calc)

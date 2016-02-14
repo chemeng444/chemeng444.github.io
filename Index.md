@@ -10,11 +10,13 @@ We will be using the [Atomic Simulation Environment (ASE)](https://wiki.fysik.dt
 
 Please make use of [Piazza](https://piazza.com/class/ij0k0xrcxrz5pa) page for troubleshooting and for sharing results.
 
+
 ## Final Project ##
 Final Report (70% - Due 3/11)
 
 1. [Project Description and Requirements](Project/)
 2. [Project Assignments](Project_Assignments/)
+
 
 ### Getting Started ###
 
@@ -22,10 +24,21 @@ Final Report (70% - Due 3/11)
 2. [Basic UNIX](UNIX/)
 3. [Python](Python/)
 
+
 ### Atomic Simulation Environment ###
 
 1. [Introduction to ASE](ASE/)
 2. [Project Part 1 - Getting Started with ASE (10% - Due 2/19)](ASE/Getting_Started/)
 3. [Project Part 2 - Adsorption Energies (10% - Due 2/26)](ASE/Adsorption/)
 4. [Project Part 3 - Transition States (10% - Due 3/4)](ASE/Transition_States/)
+5. [Error Estimation and Density of State](ASE/BEEF_DOS/)
+6. [Scripts](Scripts/)
 
+
+### Resources ###
+
+1. [Atomic Simulation Environment](https://wiki.fysik.dtu.dk/ase/)
+2. [CatApp](http://slac.stanford.edu/~strabo/catapp/catapp.htm)
+3. [Searchable CatApp](http://web.stanford.edu/~ctsai89/cgi-bin/apps/katapp/search)
+4. [Scaling Relations Plotter](http://web.stanford.edu/~ctsai89/cgi-bin/apps/katapp/plot)
+3. [CatMAP](https://github.com/SUNCAT-Center/catmap)

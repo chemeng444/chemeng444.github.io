@@ -1,3 +1,21 @@
+#!/usr/bin/env /home/vossj/suncat/bin/python
+
+## your job name
+#PBS -N job_name
+#PBS -l nodes=1:ppn=4
+#PBS -l walltime=20:00:00
+#PBS -q Q19
+#PBS -V
+#PBS -m e
+#PBS -W x="PARTITION:sw121"
+
+## your email address
+#PBS -M sunetid@stanford.edu
+
+## names for the job outputs
+#PBS -e myjob.err
+#PBS -o myjob.out
+
 # **IMPORTANT** make sure number of nodes matches images. i.e. for 5 images:
 # #SBATCH --nodes=5
 # or

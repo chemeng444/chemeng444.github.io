@@ -9,6 +9,7 @@ permalink: /ASE/Transition_States/
 2. [Getting Started](../Getting_Started/)
 3. [Adsorption](../Adsorption/)
 4. [Transition States](../Transition_States/)
+5. [Error Estimation and Density of States](../BEEF_DOS/)
 
 ____
 
@@ -16,17 +17,17 @@ ____
 
 ## Transition State Calculations
 
-In this final tutorial, you will be calculating the transition state energy using the nudged elastic band (NEB) and the fixed bond length (FBL) method.
+In this final exercise, you will be calculating the transition state energy for N<sub>2</sub> dissociation using the fixed bond length (FBL) method. The  nudged elastic band (NEB) method can more accurately determine the saddle point for the transition state, but it is more computationally intensive and we won't be using it for this course. You will also be calculating the vibrational modes for the adsorbed species and using the modules within ASE to determine free energies. Finally, you will be putting everything together in order to calculate the reaction rate.
 
 
 ## Contents
-2. [Fixed bond length calculation](#fixed-bond-length-calculation)
-3. [Vibrational frequencies](#vibrational-frequencies)
-4. [Reaction rate](#reaction-rate)
-5. [Nudged elastic band calculation](#nudged-elastic-band-calculation)
+2. [Fixed Bond Length Calculation](#fixed-bond-length-calculation)
+3. [Vibrational Frequencies](#vibrational-frequencies)
+4. [Reaction Rate](#reaction-rate)
+5. [Nudged Elastic Band Calculation (Optional)](#nudged-elastic-band-calculation)
 
 
-## Required Files
+### Required Files ###
 
 Obtain the required files by running:
 
@@ -46,12 +47,14 @@ wget http://chemeng444.github.io/ASE/Getting_Started/exercise_3_cees.tar
 tar -xvf exercise_3_cees.tar
 ```
 
+
 <a name='fixed-bond-length-calculation'></a>
-## Fixed bond length calculation
+
+### Fixed Bond Length Calculation ###
 
 The fixed bond length (FBL) method is a much faster but cruder way to approximate the minimum energy path and determine the transition state energy. It doesn’t require parallelization over different nodes but may not give you the exact transition state. Generally, one could perform a fixed bond length calculation first and determine if a transition state was found (by checking the vibrational modes). If the transition state is poorly described, then a NEB calculation can be performed based on the fixed bond length results as the inputs.
 
-In a FBL calculation, you provide an initial state of the dissociated products (the *final* state in our H<sub>2</sub>O dissociation reaction), then fix the bond length between two atoms that are required to come together and form a bond (OH* + H* --> H<sub>2</sub>). Then, you iteratively decrease the distance between the two atoms and optimize the geometry of the entire structure while keeping the bond length fixed. Follow the [`fbl.py`](fbl.py) script to determine the transition state for the dissociative adsorption of H<sub>2</sub>O on Pt(111). The script requires an initial state and a specification of the two atoms whose distance is to be fixed (O in the OH* atom and the H* atom).
+In a FBL calculation, you provide an initial state, then, you iteratively decrease the distance between the two atoms and optimize the geometry of the entire structure while keeping the bond length fixed. This will approximate the minimum energy pathway (MEP) between the initial and final states. Since we are iteratively decreasing the distance, our input in this case would correspond to the *final* state in our N<sub>2</sub> dissociation reaction. We then fix the bond length between the two N\* atoms that are required to come together and form a bond. We are thus calculating the reverse reaction: 2N\* → N<sub>2</sub> + 2\*. Follow the [`fbl.py`](fbl.py) script to determine the transition state for the dissociative adsorption of N<sub>2</sub> on your metal. The script requires an initial state and a specification of the two atoms whose distance is to be fixed (O in the OH* atom and the H* atom).
 
 ```python
 atom1=12
@@ -72,7 +75,7 @@ Then for each fixed H-O distance, a structural relaxation is performed.
 The fixed bond length calculation can continue beyond the final state and start to give you structures with unrealistically high energies. These would not be relevant for the reaction path and you should select only the trajectory images you want to view. To do this, you can combine the `.traj` files from each step first,
 
 ```bash
-ag i?.traj i??.traj -n -1 -o combined.traj
+ase-gui i?.traj i??.traj -n -1 -o combined.traj
 ```
 
 where `ag` will read all files of the form `i?.traj` followed by `i??.traj`, combine their final steps (using `-n -1`), and then write out a combined file called `combined.traj`.
@@ -80,17 +83,44 @@ where `ag` will read all files of the form `i?.traj` followed by `i??.traj`, com
 Then, to select the range of images within `combined.traj`, you can use the @ symbol followed by a range, such as:
 
 ```bash
-ag combined.traj@:22
+ase-gui combined.traj@:22
 ```
 
-which will display images 1 through 22 within the combined trajectory file. The image range follows Python syntax. Choose the range where you get a clear view of the initial state, transition state, and final state.
+which will display images 1 through 22 within the combined trajectory file. The image range follows Python syntax. Choose the range where you get a clear view of the initial state, transition state, and final state. You can use `ase-gui` to view the reaction coordinate:
+
+<center><img src="Images/NEB-menu.png" alt="NEB menu" style="width: 400px;"/>
+<br>Tools > NEB</center>
+
+Even though the `NEB` menu option was intended for viewing NEB trajectories, it will work for any transition state calculation. You should see a plot that looks like this:
+
+<center><img src="Images/FBL-plot.png" alt="Reaction coordinate" style="width: 400px;"/><br>
+Reaction Coordinate</center>
+
+You should only pay attention to the peak of the plot, which is where the transition state is. The FBL calculation will not necessarily find the final state (in this case, gaseous N<sub>2</sub>), so the final state energy in the plot will not generally be correct.
+
+
+**<font color="red">Requirement:</font>** Turn in an image of the transition state and the reaction coordinate.
+
 
 <a name='vibrational-frequencies'></a>
-## Vibrational frequencies
+
+### Vibrational Frequencies ###
+
 Calculate the vibrational frequencies for transition state and the final state using the [`run_freq.py`](run_freq.py) script. Use `ag` to view the vibrational modes, which are written out as `vib*.traj` files. There should be 3N vibrational modes for all adsorbed states, and 3N - 1 vibrational modes for the transition state.
 
+
+<a name='reaction-rate'></a>
+
+### Reaction Rate ###
+
+To calculate the rate of N<sub>2</sub> dissociation ... 
+
+The reaction rate for the entire reaction is given in a simply analytical form ... 
+
+
 <a name='nudged-elastic-band-calculation'></a>
-## Nudged elastic band
+
+### Nudged Elastic Band Calculation (Optional) ###
 
 To perform a nudged elastic band (NEB) calculation, one needs to provide an initial and final state trajectory. A series of "images" between the initial and final states will then be used to determine the minimum energy path. This band of images will be relaxed. For a NEB calculation, you only need to provide the initial and final state and the number of images in between. Go through the [`neb.py`](neb.py) script. Typically 5~7 images between the initial and final states will be sufficient. Intermediate images will be generated using a linear interpretation of the initial and final trajectory. An odd number of images should be chosen so that the one image will be at the transition state. NEB calculations can take a long time, and the [`neb_restart.py`](neb_restart.py) should be used to read in the previous images. You can also start at with k-points to speed up the calculation, and then restart the calculation with higher k-points.
 
@@ -113,7 +143,7 @@ make sure that the trajectory files are in the directory and are named in the sa
 To view all the trajectory files, run the following command
 
 ```bash
-ag neb*.traj –n -1
+ase-gui neb*.traj –n -1
 ```
 
-where all files of the form `neb*.traj` (with * referring to any number of characters) will be opened in ag. The `-n` flag specifies the image within each trajectory file. Since you are optimizing the entire reaction path, each step in the NEB will be stored in each image file. Specifying `-n -1` tells ag to only read the last image of each file (i.e. the most current step).
+where all files of the form `neb*.traj` (with * referring to any number of characters) will be opened in ag. The `-n` flag specifies the image within each trajectory file. Since you are optimizing the entire reaction path, each step in the NEB will be stored in each image file. Specifying `-n -1` tells ase-gui to only read the last image of each file (i.e. the most current step).

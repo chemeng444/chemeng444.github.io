@@ -62,11 +62,13 @@ ____
 
 ## Logging onto the Clusters
 
-For the [**Sherlock**](http://sherlock.stanford.edu) cluster, make sure to read through the login instructions [here](http://sherlock.stanford.edu/mediawiki/index.php/LogonCluster). You will be using your SUNetID to log on.
+For the [**Sherlock**](http://sherlock.stanford.edu) cluster, make sure to read through the login instructions [here](http://sherlock.stanford.edu/mediawiki/index.php/LogonCluster).
 
-For the **CEES** cluster, read through the login instructions [here](http://cees.stanford.edu/docs/GettingStarted2013.pdf). You will be assigned dedicated CEES accounts.
+For the [**CEES**](http://cees.stanford.edu) cluster, read through the login instructions [here](http://cees.stanford.edu/docs/GettingStarted2013.pdf).
 
-Afterwards, follow the instructions below for your system:
+In **both** cases, login with your SUNetID and password.
+
+Follow the instructions below for your system:
 
 ### Mac OSX
 
@@ -87,7 +89,7 @@ to log onto Sherlock, where ```sunetid``` is your Stanford SUNET ID. ```kinit```
 For **CEES**, 
 
 ```bash
-ssh -X ctsai89@cees-cluster.stanford.edu
+ssh -X sunetid@cees-cluster.stanford.edu
 ```
 
 ### Windows
@@ -143,7 +145,7 @@ ____
 
 **Sherlock only**:
 
-Once you have logged in run the following commands (you only need to do this during the **first login**)
+For the **first login** only, run the following command:
 
 ```bash
 echo $'\nexport PATH=/home/vossj/suncat/bin:$PATH' >>~/.bashrc
@@ -166,6 +168,13 @@ ln -s $SCRATCH scratch
 **CEES only**:
 
 If you access the CEES cluster from off-campus or wireless connection at Stanford Residences, you need to connect to Stanford’s VPN service before login to the cluster. The information regarding to Stanford’s VPN can be found [here](http://uit.stanford.edu/service/vpn).
+
+For the **first login** only, run the following command:
+
+```bash
+echo "setenv PATH /home/vossj/suncat/bin:${PATH}" >> ~/.tcshrc
+source ~/.tcshrc
+```
 
 Create a folder in `/data/cees/`, from where you will create additional folders for performing your calculations. Type the following to create a directory and a symbolic link from the home directory:
 
