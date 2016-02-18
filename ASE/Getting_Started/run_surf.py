@@ -6,7 +6,7 @@ from ase.constraints import *
 from espresso import espresso
 
 metal = 'Pt111'
-name = metal+'111'
+name = metal
 
 # read in the slab
 slab = io.read('slab.traj')

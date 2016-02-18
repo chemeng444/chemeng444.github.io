@@ -1,5 +1,4 @@
 from ase import *
-from espresso import espresso
 from ase.lattice.surface import *
 from ase.lattice.surface import surface
 from ase.optimize import *
@@ -23,7 +22,7 @@ a = 3.989
 vacuum = 7.0
 layers = 4
 if metal2:
-    bulk = io.read('../Bulk/bulk.traj')
+    bulk = io.read('../Bulk/bulk.traj')    # TODO: change this path to the optimized bulk.traj alloy
     if metal == 'Mo':
         slab = surface(bulk, (1,1,0), layers, vacuum=vacuum)
     else:

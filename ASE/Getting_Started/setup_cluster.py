@@ -1,7 +1,5 @@
 from ase.cluster.octahedron import Octahedron
 from ase.cluster.icosahedron import Icosahedron
-from ase import Atoms
-
 
 # script for setting up M13 cluster
 

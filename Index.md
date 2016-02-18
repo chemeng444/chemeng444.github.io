@@ -28,7 +28,7 @@ Final Report (70% - Due 3/11)
 ### Atomic Simulation Environment ###
 
 1. [Introduction to ASE](ASE/)
-2. [Project Part 1 - Getting Started with ASE (10% - Due 2/19)](ASE/Getting_Started/)
+2. [Project Part 1 - Getting Started with ASE (10% - Due 2/22 <font color="red">(Extended)</font>)](ASE/Getting_Started/)
 3. [Project Part 2 - Adsorption Energies (10% - Due 2/26)](ASE/Adsorption/)
 4. [Project Part 3 - Transition States (10% - Due 3/4)](ASE/Transition_States/)
 5. [Error Estimation and Density of State](ASE/BEEF_DOS/)

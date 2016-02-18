@@ -30,7 +30,7 @@ on Sherlock:
 
 ```bash
 cd $SCRATCH
-wget http://chemeng444.github.io/ASE/Getting_Started/exercise_2_sherlock.tar
+wget http://chemeng444.github.io/ASE/Adsorption/exercise_2_sherlock.tar
 tar -xvf exercise_2_sherlock.tar
 ```
 
@@ -38,7 +38,7 @@ or on CEES:
 
 ```bash
 cd ~/$USER
-wget http://chemeng444.github.io/ASE/Getting_Started/exercise_2_cees.tar
+wget http://chemeng444.github.io/ASE/Adsorption/exercise_2_cees.tar
 tar -xvf exercise_2_cees.tar
 ```
 

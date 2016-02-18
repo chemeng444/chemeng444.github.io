@@ -223,7 +223,7 @@ As a first example, we will be setting up a bulk fcc metal. You will typically d
 
 #### Lattice Constant Determination ####
 
-Find the [`bulk_metal.py`](bulk_metal.py) script in the `lattice` folder. This script determines the optimum lattice parameter for bulk fcc Pt using the equation of state model. **Change Pt into the metal you have been assigned for the project** and also look up a reasonable initial guess for the lattice parameter, then replace `a = `. There's actually a table of calculated lattice parameters below, but one would typically start out with an experimentally measured value as a starting guess. For alloys, an A<sub>3</sub>B alloy will be generated.
+Find the [`bulk_metal.py`](bulk_metal.py) script in the `lattice` folder. This script determines the optimum lattice parameter for bulk fcc Pt using the equation of state model. **Change Pt into the metal you have been assigned for the project** and also look up a reasonable initial guess for the lattice parameter, then replace `a = `. There's actually a table of calculated lattice parameters below, but one would typically start out with an experimentally measured value as a starting guess. For alloys, an A<sub>3</sub>B alloy will be generated. **Note:** we are only considering A<sub>3</sub>B alloys because there is a lot of published DFT data associated with them. This will make it easier for your analysis. Your cluster will just be A<sub>7</sub>B<sub>6</sub>, roughly half of each metal.
 
 Submit the script by running (for Sherlock)
 

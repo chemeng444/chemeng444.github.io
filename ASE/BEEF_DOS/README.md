@@ -21,4 +21,24 @@ ____
 1. [Error Estimation Using BEEF](#BEEF)
 2. [Projected Density of States](#DOS)
 
-### Required Files ###
+## Required Files ###
+
+Obtain the required files by running:
+
+on Sherlock:
+
+```bash
+cd $SCRATCH
+wget http://chemeng444.github.io/ASE/BEEF_DOS/_sherlock.tar
+tar -xvf beef_dos_sherlock.tar
+```
+
+or on CEES:
+
+```bash
+cd ~/$USER
+wget http://chemeng444.github.io/ASE/BEEF_DOS/beef_dos_cees.tar
+tar -xvf beef_dos_cees.tar
+```
+
+This will create a folder called `BEEF_DOS`.

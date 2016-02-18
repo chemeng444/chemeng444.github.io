@@ -35,7 +35,7 @@ on Sherlock:
 
 ```bash
 cd $SCRATCH
-wget http://chemeng444.github.io/ASE/Getting_Started/exercise_3_sherlock.tar
+wget http://chemeng444.github.io/ASE/Transition_States/exercise_3_sherlock.tar
 tar -xvf exercise_3_sherlock.tar
 ```
 
@@ -43,10 +43,12 @@ or on CEES:
 
 ```bash
 cd ~/$USER
-wget http://chemeng444.github.io/ASE/Getting_Started/exercise_3_cees.tar
+wget http://chemeng444.github.io/ASE/Transition_States/exercise_3_cees.tar
 tar -xvf exercise_3_cees.tar
 ```
 
+
+This will create a folder called `Exercise_3_Transition_States`.
 
 <a name='fixed-bond-length-calculation'></a>
 
