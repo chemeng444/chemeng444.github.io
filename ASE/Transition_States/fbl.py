@@ -29,6 +29,15 @@ constraints = [FixBondLength(atom1,atom2)]
 mask = [atom.z < 10 for atom in atoms]      # atoms in the structure to be fixed
 constraints.append(FixAtoms(mask=mask))     # this is NOT needed for the M13 cluster!!
 
+#### FOR FIXED CLUSTERS ONLY ####
+# ONLY use this if you have a system that reconstructed significantly during reconstruction
+# i.e. if it flattened out with distortions.
+# If your cluster optimized normally without distortions then this is not needed!
+
+# metals = ['Pt','Rh'] # first specify a list of metals or just the single metal, e.g. ['Pt']
+# fixatoms = FixAtoms(indices=[atom.index for atom in atoms if atom.symbol in metals])
+# constraints.append(fixatoms)
+
 atoms.set_constraint(constraints)
 
 

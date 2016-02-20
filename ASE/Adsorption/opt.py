@@ -11,18 +11,32 @@ import cPickle as pickle
 # with atoms adsorbed
 atoms = read('surface.traj')
 
-# for slabs, specify height below where atoms are fixed (bottom two layers)
-# for clusters, comment out everything from this line until `atoms.set_constraint(fixatoms)`
-z_height = 10.0 
 
-# set constraints. these should already be in place
-# if you set this previously in exercise 1
+
+#### FOR SLABS ONLY ####
+# specify height below where atoms are fixed (bottom two layers)
+# for clusters, comment out everything from this line until `atoms.set_constraint(fixatoms)`
+z_height = 10.0
 mask = [atom.z<z_height for atom in atoms]
 fixatoms = FixAtoms(mask=mask)
+
+
+#### FOR FIXED CLUSTERS ONLY ####
+# ONLY use this if you have a system that reconstructed significantly during reconstruction
+# i.e. if it flattened out with distortions.
+# If your cluster optimized normally without distortions then this is not needed!
+
+# metals = ['Pt','Rh'] # first specify a list of metals or just the single metal, e.g. ['Pt']
+# fixatoms = FixAtoms(indices=[atom.index for atom in atoms if atom.symbol in metals])
+
+
+# apply constraints
 atoms.set_constraint(fixatoms)
 
-#set up espresso calculator with 20 extra bands
-#and 4x4x1 k-point sampling
+# set up espresso calculator with 20 extra bands
+# and 4x4x1 k-point sampling (for continuous surfaces)
+# use 'gamma' for clusters!
+
 calc = espresso(pw=500,             #plane-wave cutoff
                 dw=5000,            #density cutoff
                 xc='BEEF-vdW',      #exchange-correlation functional

@@ -1,3 +1,4 @@
+from ase import Atoms
 from ase.cluster.octahedron import Octahedron
 from ase.cluster.icosahedron import Icosahedron
 
