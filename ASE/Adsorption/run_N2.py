@@ -14,7 +14,7 @@ name = 'N2'
 
 # load N2 molecule and add 20.0 AA vacuum
 atoms = molecule('N2')
-atoms.center(20.0)
+atoms.center(10.0)
 
 calc = espresso(pw=500,         #plane-wave cutoff
                 dw=5000,        #density cutoff
