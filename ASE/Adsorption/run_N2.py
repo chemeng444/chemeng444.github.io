@@ -19,7 +19,7 @@ atoms.center(10.0)
 calc = espresso(pw=500,         #plane-wave cutoff
                 dw=5000,        #density cutoff
                 xc='BEEF-vdW',  #exchange-correlation functional
-                kpts=(1,1,1),   #k-point sampling
+                kpts='gamma',   #k-point sampling
                 nbands=-10,     #10 extra bands besides the bands needed to hold
                                 #the valence electrons
                 sigma=0.1,
@@ -50,7 +50,7 @@ calc.stop()
 calcvib = vibespresso(pw=500,           #plane-wave cutoff
                       dw=5000,          #density cutoff
                       xc='BEEF-vdW',    #exchange-correlation functional
-                      kpts=(1,1,1),     #k-point sampling
+                      kpts='gamma',     #k-point sampling
                       nbands=-10,       #10 extra bands besides the bands needed to hold
                                         #the valence electrons
                       sigma=0.1,
@@ -80,7 +80,7 @@ vib_energies=vib.get_energies()
 thermo = IdealGasThermo(vib_energies=vib_energies,
                         electronicenergy=energy,
                         atoms=atoms,
-                        geometry='nonlinear',
+                        geometry='linear',
                         symmetrynumber=2, spin=0)
 
 # At 300K and 101325 Pa

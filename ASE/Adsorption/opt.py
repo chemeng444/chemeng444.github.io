@@ -30,7 +30,12 @@ fixatoms = FixAtoms(mask=mask)
 # fixatoms = FixAtoms(indices=[atom.index for atom in atoms if atom.symbol in metals])
 
 
-# apply constraints
+#### FOR CLUSTERS THAT DISTORT WITH AN ADSORBATE ####
+# relaxed_idx = [1, 2, 3]  # index of atoms allowed to relax
+# fixatoms = FixAtoms(indices=[atom.index for atom in atoms if atom.index not in relaxed_idx])
+
+
+# apply constraints - always use this unless NO atoms are fixed
 atoms.set_constraint(fixatoms)
 
 # set up espresso calculator with 20 extra bands
@@ -40,7 +45,8 @@ atoms.set_constraint(fixatoms)
 calc = espresso(pw=500,             #plane-wave cutoff
                 dw=5000,            #density cutoff
                 xc='BEEF-vdW',      #exchange-correlation functional
-                kpts=(4,4,1),       #k-point sampling;
+                kpts=(4,4,1),       #k-point sampling FOR SURFACES
+                # kpts=(1,1,1),       #k-point sampling FOR CLUSTERS
                 nbands=-20,         #20 extra bands besides the bands needed to hold
                                     #the valence electrons
                 sigma=0.1,

@@ -13,7 +13,7 @@ metal2 = None
 
 a=3.97     #initial guess for lattice constant
 strains = np.linspace(0.87, 1.13, 10) #range for scaling of latt. consts.
-                                     #[0.97..1.03] in 7 steps
+                                     #[0.87..1.13] in 10 steps
 
 # if Mo then use bcc crystal, otherwise fcc
 if metal == 'Mo':

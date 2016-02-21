@@ -3,6 +3,7 @@ export header=_header.txt
 for cluster in cees sherlock
 do
 	mkdir $name
+	cp -r Gaseous_Molecules $name/
 	cp *py $name/
 	## scripts to need header
 	for script in fbl.py neb.py neb_restart.py run_freq.py

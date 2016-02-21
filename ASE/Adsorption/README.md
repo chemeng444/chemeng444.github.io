@@ -27,11 +27,28 @@ wget http://chemeng444.github.io/Fixed_Lattice_Clusters/METALS.traj
 
 where `METALS` needs to be replaced with your system (*e.g.* `PtRe`).
 
+**Update (2016/02/23)**: Even if your cluster did not distort in the previous part, you may find that they distort once adsorbates are added on. In this case you can also use the fixed structures above. If you want, you can also study the effect of relaxing the metal atoms that are directly in contact with the adsorbates (instructions in the updated [`opt.py`](opt.py) script). Remember that the exercises are only the minimum requirements for the project. A comparison between geometric and electronic effects is something that you can explore.
+
+**Update (2016/02/25)**: If you accidentally relaxed your cluster or if you find that your cluster distorts and after some optimization steps, here is a script to help you swap out the cluster with the fixed one, while keeping the adsorbate in the same place:
+
+```bash
+wget https://chemeng444.github.io/ASE/Adsorption/replace_with_fixed_cluster.py
+```
+
+to use this, run
+
+```bash
+python replace_with_fixed_cluster.py file.traj
+```
+
+and it will replace the cluster in `file.traj` with its fixed version. 
+
 
 ## Contents
 1. [Gaseous Molecules](#gaseous-molecules)
 2. [Adsorption Sites](#adsorption-sites)
 3. [Remaining Reaction Intermediates](#reaction-intermediates)
+4. [Batch Submission](#batch-submitting)
 
 ### Required Files ###
 
@@ -72,6 +89,11 @@ where N\* refers to adsorbed N. We have *E*<sub>surface</sub> from the previous 
 
 In the `N2_gas` subfolder, find the [`run_N2.py`](run_N2.py) script. This is a typical script for calculating gas phase species: the optimized geometry is determined, then the electronic energy, as well as the vibrational modes are computed and used to determine the free energy. Run the script and check that the vibrational modes are reasonable. Ideally, one large vibrational frequency corresponding to the N-N stretching should be observed.
 
+**Update (2016/02/20):** There was a typo in `run_N2.py` where the vacuum was mistakenly doubled in all directions. Either download the script again or change line 17 to:
+
+```python 
+atoms.center(10.0)
+```
 
 
 <a name='adsorption-sites'></a>
@@ -166,11 +188,12 @@ Edit the script to add the adsorbates in the sites you need.
 Alternatively, for extended surfaces, one can first use the `fcc111` (`bcc110` if you are calculating Mo) function from the `ase.lattice.surface` module to set up the surface. Then, special keywords in the `add_adsorbate()` function can be directly used to add adsorbates to the special sites, *e.g.*
 
 ```python
-atoms = fcc111(Pt, a = 3.989, size = (2,2,4), vacuum = 7.0)
+atoms = fcc111('Pt', a = 3.989, size = (2,2,4), vacuum = 7.0)
 add_adsorbate(atoms, 'N', 1.5, 'fcc')
+add_adsorbate(atoms, 'N', 1.5, 'hcp')
 ```
 
-This can only be done if the surface has just been created, not if it is being read from a saved `.traj` file. More information can be found [here](https://wiki.fysik.dtu.dk/ase/ase/surface.html).
+This can only be done if the surface has just been created, and *not* if it is being read from a saved `.traj` file. Furthermore, the function can only add one adsorbate on one type of site. For example, you cannot add two N adsorbates onto two different bridge sites. It will add them both onto the same bridge site. More information can be found [here](https://wiki.fysik.dtu.dk/ase/ase/surface.html). These lines can be added at the beginning of the optimization script. If you are already reading in a trajectory using `atoms = io.read('trajfile.traj')`, then this will just overwrite `atoms` with a new surface, so be careful!
 
 One could also use the ASE graphical user interface `ase-gui` to add an adsorbate or molecule as well. Use `ase-gui <file>.traj` to open the trajectory file. Then simply click the atom above where the adsorbate will sit, and click `Ctrl + A`, then specify the adsorbate and the vertical distance above the site. You can also hold `Ctrl` to select multiple atoms and add an adsorbate, which will be at the center of all the selected atoms.
 
@@ -207,5 +230,44 @@ Complete structural optimizations for the following adsorbates:
 * Calculate 2N\* adsorption on all possible sites on the M<sub>13</sub> cluster **and** the extended surface.
 * Calculate the reaction intermediates (from N\* through NH3\*) on all possible adsorption sites **only** for the M<sub>13</sub> cluster.
 * There may be a lot of possible configurations, so we recommend that you set up *all* possible ones and submit them at the same time.
+
+<a name='batch-submitting'></a>
+
+### Batch Submission ###
+
+To save you some time, you can try using the following script for batch submitting the optimization jobs:
+
+```bash
+export CURDIR=$PWD                               #save current directory
+for ads in 2N_surface 2N_cluster N NH NH2 NH3 H    #loop through first directory
+do
+for site in $ads/*/        #loop through ALL subdirectories of ads folder
+    do                     #you can also specify individually or use wildcards
+    # cp opt.py $site      #uncomment to copy opt.py to every subdir
+    cd $site
+        if [[ $hostname == *"sherlock"* ]]
+        then
+            sbatch --job-name=$PWD opt.py     #sbatch if sherlock
+        else
+            qsub opt.py                       #qsub if cees
+        fi
+        cd $CURDIR        #go back to the original directory and continue loop
+    done
+done
+```
+
+the script simply loops through the folders `2N_surface 2N_cluster N NH NH2 NH3 H`, and all of their subdirectories and executes the submission `sbatch` or `qstat` command.
+
+Get the script here
+
+```bash
+wget http://chemeng444.github.io/ASE/Adsorption/batchsub.sh
+```
+
+and execute from the directory where `N NH ... NH3 ... H` are using
+
+```bash
+/usr/bin/env bash batchsub.sh
+```
 
 **Next**: move on to [Transition States](../Transition_States/) to learn about how to determine transition states and barriers.

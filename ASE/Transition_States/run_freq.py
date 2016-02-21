@@ -5,18 +5,34 @@ from ase.vibrations import Vibrations
 from espresso import espresso
 from espresso.vibespresso import vibespresso
 
-#############
-## more information here: https://wiki.fysik.dtu.dk/ase/ase/thermochemistry/thermochemistry.html
-#############
+########################################################################################################
+## more information here: https://wiki.fysik.dtu.dk/ase/ase/thermochemistry/thermochemistry.html      ##
+########################################################################################################
+
+#########################################################################################################
+#####                                     YOUR SETTINGS HERE                                        #####
+#########################################################################################################
 
 # rename to the name of your trajectory file
 # containing the surface with adsorbates
 
 atoms = read('ads_surface.traj')
 
+
+#########################################################################################################
+#####                                     END                                                       #####
+#########################################################################################################
+
+
+if num_atoms == 16:
+  kpts = (4, 4, 1)
+elif  num_atoms == 13:
+  kpts = 'gamma'
+
+
 calc = espresso(pw = 500,
                 dw = 5000,
-                kpts = (4, 4, 1), 
+                kpts = kpts, 
                 nbands = -20,
                 xc = 'BEEF-vdW', 
                 convergence = {'energy':1e-5,
@@ -32,7 +48,7 @@ calc = espresso(pw = 500,
 # special calculator for the vibration calculations
 calcvib = vibespresso(pw = 500,
                       dw = 5000,
-                      kpts = (4, 4, 1), 
+                      kpts = kpts, 
                       nbands = -20,
                       xc = 'BEEF-vdW', 
                       convergence = {'energy':1e-5,
@@ -62,15 +78,20 @@ vib.summary(method='standard')                             # summarize the calcu
 for mode in range(len(vibrateatoms)*3):                    # Make trajectory files to visualize the modes.    
     vib.write_mode(mode)
 
-# Calculate free energy
-vibenergies=vib.get_energies()
-vibenergies[:]=[vib for vib in vibenergies if not isinstance(vib,complex)]  # only take the real modes
-gibbs = HarmonicThermo(vib_energies = vibenergies, electronicenergy = energy)
 
-# At 300K and 101325 Pa
-# change for your operating conditions 
-freeenergy = gibbs.get_gibbs_energy(300,101325)
+### UNCOMMENT TO CALCULATE FREE get_energies
+### YOU CAN ALSO USER get_ads_free_energy.py and get_gas_free_energy.py
+### Calculate free energy
 
-f=open('out.energy','w')
-f.write('Potential energy: '+str(energy)+'\n'+'Free energy: '+str(freeenergy)+'\n')
-f.close
+# vibenergies=vib.get_energies()
+# vibenergies[:]=[vib for vib in vibenergies if not isinstance(vib,complex)]  # only take the real modes
+# gibbs = HarmonicThermo(vib_energies = vibenergies, electronicenergy = energy)
+
+### At 300K and 101325 Pa
+### change for your operating conditions 
+
+# freeenergy = gibbs.get_gibbs_energy(300,101325)
+
+# f=open('out.energy','w')
+# f.write('Potential energy: '+str(energy)+'\n'+'Free energy: '+str(freeenergy)+'\n')
+# f.close

@@ -13,7 +13,7 @@
 #################
 #time you think you need; default is one hour
 #in minutes in this case
-#SBATCH --time=1200:00
+#SBATCH --time=2880:00
 #################
 #number of nodes you are requesting
 #SBATCH --nodes=1
@@ -24,7 +24,7 @@
 #SBATCH --mail-type=ALL
 #################
 #who to send email to; please change to your email
-#SBATCH --mail-user=SUNETID@stanford.edu
+#SBATCH --mail-user=$USER@stanford.edu
 #################
 #task to run per node; each node has 16 cores
 #SBATCH --ntasks-per-node=16

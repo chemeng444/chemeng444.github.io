@@ -183,7 +183,7 @@ qn = QuasiNewton(slab, trajectory=name+'.traj', logfile=name+'.log') #relax slab
 qn.run(fmax=0.05)                               #until max force<=0.05 eV/AA
 ```
 
-The `logfile=` argument is optional. If it's not specified, then the output will be written to the system output, e.g. `myjob.out`. You should see the following results:
+The `logfile=` argument is optional. If it's not specified, then the output will be written to the system output, e.g. `myjob.out`. If it is specified, then the output for the optimization will be written to `name+'.log'`, e.g. `Pt111.log`. You should see the following results:
 
 ```bash
 BFGSLineSearch:   0[  0]  12:50:46   -28144.460970       1.7496

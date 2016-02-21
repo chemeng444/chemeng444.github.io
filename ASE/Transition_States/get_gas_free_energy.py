@@ -15,10 +15,10 @@ geometry = 'linear'
 
 atoms = read('N2.traj')
 #electronic energy in eV
-energy = -496.271534
+energy = -553.610395
 
 #vibrational energies in meV
-vibenergies = [7, 7, 7, 13.2, 20.4, 25.4, 199.8, 463.9, 477.2]
+vibenergies = [0, 0, 0, 7.6, 7.6, 299.2]
 
 #convert from meV to eV for each mode
 vibenergies[:] = [ve/1000. for ve in vibenergies]
