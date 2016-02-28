@@ -18,56 +18,40 @@ from espresso.vibespresso import vibespresso
 
 atoms = read('ads_surface.traj')
 
-
 #########################################################################################################
 #####                                     END                                                       #####
 #########################################################################################################
 
+metal_atoms = [atom.index for atom in atoms if atom.symbol not in ['N','H']]
+num_atoms = len(metal_atoms)
 
 if num_atoms == 16:
   kpts = (4, 4, 1)
 elif  num_atoms == 13:
   kpts = 'gamma'
+else:
+  print "Wrong number of metal atoms! Check your input trajectory!"
+  exit()
+
+params = {'pw':500,
+          'dw':5000,
+          'kpts':kpts,
+          'nbands':-20,
+          'xc':'BEEF-vdW',
+          'psppath':'/home/vossj/suncat/psp/gbrv1.5pbe',
+          'convergence':{'energy':1e-5, 'mixing':0.1, 'nmix':10, 'maxsteps':500, 'diag':'david'},
+          'spinpol':False}
 
 
-calc = espresso(pw = 500,
-                dw = 5000,
-                kpts = kpts, 
-                nbands = -20,
-                xc = 'BEEF-vdW', 
-                convergence = {'energy':1e-5,
-                               'mixing':0.1,
-                               'nmix':10,
-                               'maxsteps':500,
-                               'diag':'david'
-                                },
-                spinpol = False,
-                outdir = 'calcdir',
-                ) 
-
-# special calculator for the vibration calculations
-calcvib = vibespresso(pw = 500,
-                      dw = 5000,
-                      kpts = kpts, 
-                      nbands = -20,
-                      xc = 'BEEF-vdW', 
-                      convergence = {'energy':1e-5,
-                                     'mixing':0.1,
-                                     'nmix':10,
-                                     'maxsteps':500,
-                                     'diag':'david'
-                                      },
-                      spinpol = False,
-                      outdirprefix = 'vibdir',
-                      )
+calc = espresso(outdir = 'calcdir', **params)             # regular espresso calculator
+calcvib = vibespresso(outdirprefix = 'vibdir', **params)  # special calculator for the vibration calculations
 
 atoms.set_calculator(calc)                            # attach calculator to the atoms                   
 
 energy = atoms.get_potential_energy()                 # caclulate the energy, to be used to determine G
 
-# CHANGE TO THE ATOMS YOU NEED TO VIBRATE
-# metal atoms can be assumed to be fixed
-vibrateatoms=[atom.index for atom in atoms if atom.symbol in ['H','N']]   # calculate the vibrational modes for all N and H atoms
+# vibrate N and H atoms
+vibrateatoms = [atom.index for atom in atoms if atom.symbol in ['H','N']]   # calculate the vibrational modes for all N and H atoms
 atoms.set_calculator(calcvib)                                             # attach vibrations calculator to the atoms                   
 
 # Calculate vibrations                                                                                        
@@ -80,11 +64,12 @@ for mode in range(len(vibrateatoms)*3):                    # Make trajectory fil
 
 
 ### UNCOMMENT TO CALCULATE FREE get_energies
+
 ### YOU CAN ALSO USER get_ads_free_energy.py and get_gas_free_energy.py
 ### Calculate free energy
 
 # vibenergies=vib.get_energies()
-# vibenergies[:]=[vib for vib in vibenergies if not isinstance(vib,complex)]  # only take the real modes
+# vibenergies=[vib for vib in vibenergies if not isinstance(vib,complex)]  # only take the real modes
 # gibbs = HarmonicThermo(vib_energies = vibenergies, electronicenergy = energy)
 
 ### At 300K and 101325 Pa

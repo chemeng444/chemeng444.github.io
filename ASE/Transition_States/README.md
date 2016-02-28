@@ -56,6 +56,8 @@ The fixed bond length (FBL) method is a much faster but cruder way to approximat
 
 In a FBL calculation, you provide an initial state, then, you iteratively decrease the distance between the two atoms and optimize the geometry of the entire structure while keeping the bond length fixed. This will approximate the minimum energy pathway (MEP) between the initial and final states. Since we are iteratively decreasing the distance, our input in this case would correspond to the *final* state in our N<sub>2</sub> dissociation reaction. We then fix the bond length between the two N\* atoms that are required to come together and form a bond. We are thus calculating the reverse reaction: 2N\* → N<sub>2</sub> + 2\*. Follow the [`fbl.py`](fbl.py) script to determine the transition state for the dissociative adsorption of N<sub>2</sub> on your metal. The script requires an initial state and a specification of the two atoms whose distance is to be fixed (the two N* atoms).
 
+When deciding which of your 2N\* states to include, you should consider all fully dissociated states within 0.5 eV of the lowest energy configuration, to ensure that you have found the lowest possible barrier. Note that we want to find the barrier for N<sub>2</sub> dissociation, so any configuration you found that is not dissociated (N<sub>2</sub>\* rather than 2N\*) should be ignored. 
+
 ```python
 atom1=12
 atom2=13
@@ -117,7 +119,11 @@ Reaction Coordinate</center>
 
 You should only pay attention to the peak of the plot, which is where the transition state is. The FBL calculation will not necessarily find the final state (in this case, gaseous N<sub>2</sub>), so the final state energy in the plot will not generally be correct.
 
+Keep in mind that this plot is a BACKWARDS description of the reaction path for N<sub>2</sub> dissociation. The first image is actually the last step (fully dissociated state).
+
 If the bond length becomes unrealistically short, you will also see large spikes in the total energy towards the end of your calculation. You can safely ignore these images.
+
+Note that on very reactive surfaces, the FBL calculation may not be able to find the desorbed N<sub>2</sub>\* state before the bond length becomes unrealistically short (the adsorption of N<sub>2</sub>\* is extremely favorable). This is okay because we would expect the relevant transition state to occur AFTER the adsorption step for such a reactive surface. You can therefore use the transition state calculation as normal in this case even though FBL does not recover the gaseous N<sub>2</sub> state.
 
 
 **<font color="red">Requirement:</font>** Turn in an image of the transition state and the reaction coordinate.
@@ -153,15 +159,15 @@ To calculate the rate of N<sub>2</sub> dissociation, one can assume that the fir
 
 $$
 \begin{align}
-\mathrm{N_2} + 2* &\rightarrow 2N*\\
-\mathrm{N}* + \frac{3}{2}\mathrm{H}_{2\,\mathrm{(g)}} &\leftrightarrow \mathrm{NH}_{3\,\mathrm{(g)}} + *
+&(1) \quad &\mathrm{N_2} + 2* \rightarrow \mathrm{2N}*\\
+&(2) \quad &\mathrm{N}* + \frac{3}{2}\mathrm{H}_{2\,\mathrm{(g)}} \leftrightarrow \mathrm{NH}_{3\,\mathrm{(g)}} + *
 \end{align}
 $$
 
 The rate constant and equilibrium constants are:
 
 $$
-k_1 = \frac{k_\mathrm{B} T}{h} \exp\left(-\frac{G_\mathrm{N-N}}{k_\mathrm{b}T}\right)
+k_1 = \frac{k_\mathrm{B} T}{h} \exp\left(-\frac{\Delta G_\mathrm{TS,1}}{k_\mathrm{b}T}\right)
 $$
 
 For the entire reaction:

@@ -12,12 +12,11 @@ from espresso import espresso
 #####                                     YOUR SETTINGS HERE                                        #####
 #########################################################################################################
 
-# read in trajectory. this should be the dissociated OH and H
+# read in trajectory. this should be with the two dissociated N atoms
 atoms = io.read('surface.traj')
 
-# specify the two atoms whose distance is to be fixed
+# specify the two N atoms whose distance is to be fixed
 # during the geometry optimization
-# One should be the O atom, and the other is the dissociated H
 # MAKE SURE YOU HAVE CHOSEN THE RIGHT ATOMS BEFORE SUBMITTING
 # don't wait until it has finished running to find out you fixed
 # the wrong atoms
@@ -25,14 +24,18 @@ atoms = io.read('surface.traj')
 atom1=12
 atom2=13
 
-metals = ['Pt','Rh'] # first specify a list of metals or just the single metal, e.g. ['Pt']
-
 # SET TO True if fix cluster, otherwise False
 fix_cluster = True
 
-threshold = 0.9    # threshold bond-length for terminating the FBL calculation
+# FOR SURFACES, set to the height below which atoms are fixed.
+# This is needed as the fixed bong length is a constraint and all of them need to be set again
+# if your system is a cluster, this setting will be ignored
+z_height = 10.0
 
-## KPTS SET AUTOMATICALLY
+# threshold bond-length for terminating the FBL calculation
+threshold = 0.9
+
+## CORRECT KPTS SET AUTOMATICALLY
 
 #########################################################################################################
 #####                                     END                                                       #####
@@ -42,34 +45,24 @@ threshold = 0.9    # threshold bond-length for terminating the FBL calculation
 # apply all constraints
 constraints = [FixBondLength(atom1,atom2)]
 
-num_atoms = len([atom.index for atom in atoms if atom.symbol not in ['N','H']])
+metal_atoms = [atom.index for atom in atoms if atom.symbol not in ['N','H']]
+num_atoms = len(metal_atoms)
 
 
-#### FOR SLABS ONLY ####
-# specify height below where atoms are fixed (bottom two layers)
-# for clusters, comment out everything from this line until `atoms.set_constraint(fixatoms)`
+### NO NEED TO DO ANYTHING HERE ###
+# the if conditions take care of everything
+# checks which type of system it is and sets the right constraints
+
 if num_atoms == 16:
     print "slab calculation..."
     kpts = (4, 4, 1)
-    mask = [atom.z < 10 for atom in atoms]      # atoms in the structure to be fixed
-    constraints.append(FixAtoms(mask=mask))     # this is NOT needed for the M13 cluster!!
-
-
-#### FOR FIXED CLUSTERS ONLY ####
-# ONLY use this if you have a system that reconstructed significantly during reconstruction
-# i.e. if it flattened out with distortions.
-# If your cluster optimized normally without distortions then this is not needed!
+    mask = [atom.z < z_height for atom in atoms]      # atoms in the structure to be fixed
+    constraints.append(FixAtoms(mask=mask))
 elif  num_atoms == 13:
     print "cluster calculation..."
     kpts = 'gamma'
     if fix_cluster:
-        fixatoms = FixAtoms(indices=[atom.index for atom in atoms if atom.symbol in metals])
-        constraints.append(fixatoms)
-
-
-#### FOR CLUSTERS THAT DISTORT WITH AN ADSORBATE ####
-# relaxed_idx = [1, 2, 3]  # index of atoms allowed to relax
-# fixatoms = FixAtoms(indices=[atom.index for atom in atoms if atom.index not in relaxed_idx])
+        constraints.append(FixAtoms(indices=metal_atoms))
 else:
     print "Wrong number of metal atoms! Check your input trajectory!"
     exit()
