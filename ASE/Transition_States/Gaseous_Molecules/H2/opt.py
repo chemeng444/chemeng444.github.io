@@ -13,7 +13,7 @@
 #################
 #time you think you need; default is one hour
 #in minutes in this case
-#SBATCH --time=01:00:00
+#SBATCH --time=48:00:00
 #################
 #quality of service; think of it as job priority
 #SBATCH --qos=normal
@@ -42,7 +42,7 @@ from ase.vibrations import Vibrations
 from ase.thermochemistry import IdealGasThermo
 from ase.all import view,read,write
 
-atoms = molecule('N2') # molecular
+atoms = molecule('H2') # molecular
 atoms.center(vacuum = 10.0)
 atoms.set_cell([[10,0,0],[0,10.1,0],[0,0,10.2]])
 
@@ -51,7 +51,7 @@ calc = espresso(pw = 500.,
                 nbands = -10,
             kpts=(1, 1, 1), 
             xc = 'BEEF', 
-            outdir='calcdir',
+            outdir='outdir',
             psppath = "/scratch/users/colinfd/psp/gbrv",
             sigma = 10e-4)
 
