@@ -185,7 +185,7 @@ $$
 The reaction rate (turnover frequency, TOF) for the entire reaction is then given in a simply analytical form:
 
 $$
-\mathrm{TOF} = k_1 P_\mathrm{N_2} \left(1+\frac{P_\mathrm{NH_3}}{K_2 P_\mathrm{H_2}^{1.5}}\right)\left(1 - \frac{P_\mathrm{NH_3}^2}{K_\mathrm{eq}P_\mathrm{H_2}^3 P_\mathrm{N_2}}\right)
+\mathrm{TOF} = k_1 P_\mathrm{N_2} \left(1+\frac{P_\mathrm{NH_3}}{K_2 P_\mathrm{H_2}^{1.5}}\right)^{-2}\left(1 - \frac{P_\mathrm{NH_3}^2}{K_\mathrm{eq}P_\mathrm{H_2}^3 P_\mathrm{N_2}}\right)
 $$
 
 

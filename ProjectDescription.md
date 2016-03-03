@@ -14,7 +14,13 @@ permalink: /Project/
 7. [Summary of Requirements](#reqs)
 
 
-For the course project, you will be studying thermo-chemical ammonia synthesis on metallic clusters and surfaces. Each student will be assigned one metal or bimetallic alloy. 
+For the course project, you will be studying thermo-chemical ammonia synthesis on metallic clusters and surfaces. Each student will be assigned one metal or bimetallic alloy. The due date is <font color="red">3/13 at 11:59 PM (hard deadline)</font>.
+
+Turn in your final report by emailing a PDF file to all TA's:
+
+```
+ctsai89@stanford.edu, aayush@stanford.edu, shaama@stanford.edu, ambarish@stanford.edu
+```
 
 <a name='intro'></a>
 
@@ -69,18 +75,7 @@ for CEES:
 mkdir /data/cees/$USER/CHE444Project
 ```
 
-You may run the exercises in any directory (as long as it is under `$SCRATCH` for Sherlock and `/data/cees/$USER` for CEES), but keep all the final files for the project organized in the following structure:
-
-```bash
-../CHE444Project/Adsorption/
-../CHE444Project/Adsorption/2N/
-../CHE444Project/Adsorption/N/
-../CHE444Project/Adsorption/NH/
-...
-../CHE444Project/TransitionStates/2N_to_N2/
-...
-```
-
+You may run the exercises in any directory (as long as it is under `$SCRATCH` for Sherlock and `/data/cees/$USER` for CEES), but keep all the final files for the project organized.
 
 For the first step, N<sub>2</sub> → 2N\*, you *are required* to calculate the transition state. To do this, you will need to calculate the final adsorbed state with two nitrogen atoms (2N\*).
 
@@ -97,11 +92,40 @@ Once you have finished the required calculations, you are free to explore other 
 
 **IMPORTANT:**
 
-When you have finished all your calculations. Run the following to copy all your files into the shared course directory, so your classmates may access the results:
+When you have finished all your calculations. Confirm that your results are organized in the following way:
 
 ```bash
-wget http://chemeng444.github.io/collect_data.sh
-./collect_data.sh
+../CHE444Project/Adsorption/
+../CHE444Project/Adsorption/Surface/
+../CHE444Project/Adsorption/Surface/2N/
+../CHE444Project/Adsorption/Surface/2N/config1
+...
+../CHE444Project/Adsorption/Cluster/
+../CHE444Project/Adsorption/Cluster/2N/
+../CHE444Project/Adsorption/Cluster/NH/
+../CHE444Project/Adsorption/Cluster/NH/config1
+../CHE444Project/Adsorption/Cluster/NH/config2
+...
+../CHE444Project/TransitionStates/Cluster/2N_to_N2/
+../CHE444Project/TransitionStates/Cluster/2N_to_N2/config1
+...
+../CHE444Project/Vibrations/N/
+../CHE444Project/Vibrations/2N/
+...
+```
+
+where `CHEMENG444Project` is your **project directory**. You should rename `config1` to something that describes the binding configuration, such as `BrBr` for two bridging sites. You should have one calculation per directory. Run the following to copy all your files into the shared course directory, so your classmates may access the results.
+
+On Sherlock, from your **project directory**, run:
+
+```bash
+/scratch/PI/suncat/chemeng444_2016/submit
+```
+
+On CEES, from your **project directory**, run:
+
+```bash
+/data/cees/cheme444/submit
 ```
 
 <a name='analysis'></a>
@@ -124,6 +148,8 @@ You are welcome to share data amongst your peers to discuss broader trends. (We 
 
 * Density of states calculations on the surfaces
 * Error analysis using the BEEF ensembles
+
+**If you need the energy of the fixed clusters, they are available [here](../Fixed_Lattice_Clusters/energies.txt).**
 
 <a name='report'></a>
 
@@ -170,3 +196,7 @@ At a minimum you should accomplish the following:
     1. Optimal adsorption sites (relation to transition states)
     2. Kinetic rate analysis
 6. Report (3~5 pages maximum)
+
+Email your final report as a PDF document to:
+
+`ctsai89@stanford.edu, aayush@stanford.edu, shaama@stanford.edu, ambarish@stanford.edu`
